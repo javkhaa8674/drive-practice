@@ -18,8 +18,10 @@ const Welcome = () => {
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.userName}>Hello Javkhaa</Text>
-        <Text style={styles.welcomeMessage}>Find your perfect job</Text>
+        <Text style={styles.userName}>Сайн байна уу? Гантөмөр Жавхлантөгс</Text>
+        <Text style={styles.welcomeMessage}>
+          Та хүссэн цагтаа манай үйлчилгээг авах боломжтой.
+        </Text>
       </View>
     </View>
   );

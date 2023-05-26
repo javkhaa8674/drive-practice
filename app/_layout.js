@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -22,6 +22,6 @@ const Layout = () => {
     return null;
   }
 
-  return <Stack onLayout={onLayoutRootView} />;
+  return <Slot onLayout={onLayoutRootView} />;
 };
 export default Layout;
