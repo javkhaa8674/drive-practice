@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   btnImg: (dimension) => ({
     width: dimension,
     height: dimension,
-    borderRadius: SIZES.small / 1.25,
+    borderRadius: SIZES.medium / 1.25,
   }),
   userName: {
     marginTop: 20,

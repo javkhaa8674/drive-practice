@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Slot, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
 import { COLORS, icons, images, SIZES, FONT } from "../constants";
 import styles from "./index.style";
@@ -17,6 +17,7 @@ import {
   ScreenHeaderBtn,
   Welcome,
 } from "../components";
+import schedule from "./schedule";
 
 const Home = () => {
   const router = useRouter();
@@ -25,15 +26,23 @@ const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   // Animated Properties...
-
+  // Move to right ...
   const offsetValue = useRef(new Animated.Value(0)).current;
   // Scale Intially must be One...
   const scaleValue = useRef(new Animated.Value(1)).current;
   const closeButtonOffset = useRef(new Animated.Value(0)).current;
 
+  console.log("currentTab:", currentTab);
+
   return (
     <SafeAreaView style={styles.container}>
-      <Slot />
+      <Stack.Screen
+        options={{
+          // Hide the header for all other routes.
+          headerShown: false,
+        }}
+      />
+      {/* Menu Design */}
       <View style={{ justifyContent: "flex-start", padding: 15 }}>
         <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
         <Text style={styles.userName}>Гантөмөр Жавхлантөгс </Text>
@@ -64,6 +73,8 @@ const Home = () => {
           {TabButton(currentTab, setCurrentTab, "Гарах", icons.logout)}
         </View>
       </View>
+
+      {/* Home Design */}
       <Animated.View
         style={{
           flexGrow: 1,
@@ -77,11 +88,12 @@ const Home = () => {
           paddingVertical: 20,
           // Transforming View ...
           transform: [{ scale: scaleValue }, { translateX: offsetValue }],
+          borderRadius: showMenu ? 15 : 0,
         }}
       >
         {
           // Menu Button ...
-        }{" "}
+        }
         <Animated.View
           style={{
             transform: [
@@ -122,16 +134,11 @@ const Home = () => {
             <Image
               source={showMenu ? icons.close : icons.menu}
               resizeMode="cover"
-              style={styles.btnImg("60%")}
+              style={styles.btnImg(25)}
             />
           </TouchableOpacity>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ flex: 1, padding: SIZES.medium }}>
-              <Welcome />
-              <Popularjobs />
-              <Nearbyjobs />
-            </View>
-          </ScrollView>
+
+          {currentTab === "Нүүр хуудас" ? <Welcome /> : <Nearbyjobs />}
         </Animated.View>
       </Animated.View>
     </SafeAreaView>
