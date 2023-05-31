@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const schedule = () => {
+const HistoryPage = () => {
   return (
     <View>
-      <Text>schedule</Text>
+      <Text>Түүх</Text>
     </View>
   );
 };
 
-export default schedule;
+export default HistoryPage;
