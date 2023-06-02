@@ -11,9 +11,10 @@ const BottomTabs = () => {
           tabBarLabel: "Нүүр",
           headerTitle: "Нүүр хуудас",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="list" size={size} color={color} />
+            <FontAwesome5 name="home" size={size} color={color} />
           ),
         }}
+        style={{ flexDirection: "row" }}
       />
       <Tabs.Screen
         name="profile"
@@ -28,20 +29,10 @@ const BottomTabs = () => {
       <Tabs.Screen
         name="service"
         options={{
-          tabBarLabel: "Цаг төлөвлөх",
+          tabBarLabel: "Үйлчилгээ",
           headerTitle: "Цаг авах",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="calendar" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="history"
-        options={{
-          tabBarLabel: "Түүх",
-          headerTitle: "Үйлчилгээний түүх",
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="history" size={size} color={color} />
           ),
         }}
       />
