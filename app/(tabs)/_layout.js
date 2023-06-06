@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Tabs } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { AuthContext } from "../../context/authContext";
 
 const BottomTabs = () => {
   return (

@@ -34,17 +34,6 @@ const styles = StyleSheet.create({
     fontWeight: 700,
     fontSize: SIZES.medium,
   },
-  buttonOutline: {
-    backgroundColor: COLORS.lightWhite,
-    marginTop: 5,
-    borderColor: COLORS.primary,
-    borderWidth: 1,
-  },
-  buttonOutlineText: {
-    color: COLORS.primary,
-    fontWeight: 700,
-    fontSize: SIZES.medium,
-  },
 });
 
 export default styles;
