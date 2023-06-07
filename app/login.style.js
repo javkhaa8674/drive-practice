@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { COLORS, SIZES } from "./../constants";
+import { COLORS, FONT, SIZES } from "./../constants";
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +31,17 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.lightWhite,
+    fontWeight: 700,
+    fontSize: SIZES.medium,
+  },
+  buttonOutline: {
+    backgroundColor: COLORS.lightWhite,
+    marginTop: 5,
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+  },
+  buttonOutlineText: {
+    color: COLORS.primary,
     fontWeight: 700,
     fontSize: SIZES.medium,
   },

@@ -1,10 +1,10 @@
 import { useCallback } from "react";
+import { Button } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { Button } from "react-native";
 import { AuthProvider } from "../context/authContext";
-import { COLORS, SIZES, FONT } from "../constants/theme";
+import { COLORS, FONT } from "../constants/theme";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -52,6 +52,13 @@ const Layout = () => {
         <Stack.Screen
           name="index"
           options={{
+            // Hide the header for all other routes.
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="login"
+          options={{
             headerTitle: "Нэвтрэх",
             // Hide the header for all other routes.
             headerShown: true,
@@ -64,7 +71,10 @@ const Layout = () => {
             // Hide the header for all other routes.
             headerShown: true,
             headerRight: () => (
-              <Button title="Open Modal" onPress={() => router.push("modal")} />
+              <Button
+                title="Open Modal"
+                onPress={() => router.push("/modal")}
+              />
             ),
           }}
         />
@@ -73,7 +83,7 @@ const Layout = () => {
           options={{
             presentation: "modal",
             headerLeft: () => (
-              <Button title="Close" onPress={() => router.back()} />
+              <Button title="Close" onPress={() => router.replace("/login")} />
             ),
           }}
         />

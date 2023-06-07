@@ -16,6 +16,7 @@ import transaction from "../assets/icons/transaction.png";
 import login from "../assets/icons/enter.png";
 import logout from "../assets/icons/exit.png";
 import close from "../assets/icons/close.png";
+import enter from "../assets/icons/enter.png";
 
 export default {
   heart,
@@ -36,4 +37,5 @@ export default {
   login,
   logout,
   close,
+  enter,
 };

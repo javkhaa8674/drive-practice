@@ -1,9 +1,11 @@
+import { TouchableOpacity, Text } from "react-native";
 import React, { useContext } from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { AuthContext } from "../../context/authContext";
 
 const BottomTabs = () => {
+  const router = useRouter();
   return (
     <Tabs>
       <Tabs.Screen
@@ -13,6 +15,30 @@ const BottomTabs = () => {
           headerTitle: "Нүүр хуудас",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="home" size={size} color={color} />
+          ),
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => router.replace("/login")}
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>Login</Text>
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => router.replace("/login")}
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text>Login</Text>
+            </TouchableOpacity>
           ),
         }}
         style={{ flexDirection: "row" }}

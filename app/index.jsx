@@ -1,59 +1,34 @@
-import {
-  View,
-  Text,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from "react-native";
-import React, { useContext, useState } from "react";
-import { useRouter } from "expo-router";
-import styles from "./index.style";
-import { TextInput } from "react-native-gesture-handler";
+import { View, ActivityIndicator } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { useRouter, useSegments, useRootNavigationState } from "expo-router";
 import { AuthContext } from "../context/authContext";
+import { COLORS } from "../constants";
 
-const LoginPage = () => {
+const App = () => {
   const router = useRouter();
-  const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const segments = useSegments();
+  const navigationState = useRootNavigationState();
+  const { userToken } = useContext(AuthContext);
 
-  const handlePressLogin = () => {
-    login();
-    // router.replace("home");
-  };
-  const handlePressRegister = () => {
-    router.replace("register");
-  };
+  useEffect(() => {
+    if (!navigationState?.key) return;
+    const tabs = segments[0] === "tabs";
+    if (userToken === null && !tabs) {
+      router.replace("/login");
+    } else if (userToken !== null) {
+      router.replace("/home");
+    }
+  }, [userToken === null, segments, navigationState?.key]);
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
-      <View style={styles.btnContainer}>
-        <TouchableOpacity onPress={handlePressLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={handlePressRegister}
-          style={[styles.button, styles.buttonOutline]}
-        >
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </KeyboardAvoidingView>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      {navigationState?.key ? (
+        <ActivityIndicator size={"large"} color={COLORS.primary} />
+      ) : (
+        <></>
+      )}
+    </View>
   );
 };
 
-export default LoginPage;
+export default App;
