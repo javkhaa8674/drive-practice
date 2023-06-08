@@ -7,13 +7,14 @@ import {
   //Switch,
 } from "react-native";
 import React, { useState } from "react";
+import Checkbox from "expo-checkbox";
 import styles from "./modal.style";
 import { icons, COLORS } from "../constants";
+import { useRouter } from "expo-router";
 
 const Modal = () => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const toggleSwitch = () => setIsEnabled((previousState) => !previousState);
-
+  const [isChecked, setChecked] = useState(false);
+  const router = useRouter();
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -84,25 +85,33 @@ const Modal = () => {
           </Text>
         </View>
         <View style={styles.checkBoxContainer}>
-          {/* <Switch
-            trackColor={{ false: COLORS.primary, true: COLORS.primary }}
-            thumbColor={isEnabled ? COLORS.lightWhite : COLORS.lightWhite}
-            ios_backgroundColor={COLORS.primary}
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-          /> */}
+          <Checkbox
+            value={isChecked}
+            onValueChange={setChecked}
+            color={isChecked ? COLORS.primary : undefined}
+          />
           <Text style={styles.checkBoxText}>
-            Би энэ гэрээг уншиж танилцлаа. Гэрээний бүх зүйлийг зөвшөөрч байна.{" "}
+            Би энэ гэрээг уншиж танилцлаа. Гэрээний бүх зүйлийг зөвшөөрч байна.
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
-            <Image src={icons.enter} style={styles.buttonImage} />
-            <Text style={styles.buttonText}>Зөвшөөрөх</Text>
+          <TouchableOpacity
+            onPress={() => router.replace("/login")}
+            style={[styles.button, styles.buttonOutline]}
+          >
+            <Image
+              source={icons.back}
+              style={[styles.buttonImage, styles.buttonOutlineImage]}
+            />
+            <Text style={[styles.buttonText, styles.buttonOutlineText]}>
+              Буцах
+            </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.buttonOutline]}>
-            <Image src={icons.enter} style={styles.buttonImage} />
-            <Text style={styles.buttonOutlineText}>Буцах</Text>
+          <TouchableOpacity
+            style={isChecked ? styles.button : [styles.button, styles.disabled]}
+          >
+            <Image source={icons.check} style={styles.buttonImage} />
+            <Text style={styles.buttonText}>Зөвшөөрөх</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

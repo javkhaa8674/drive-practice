@@ -7,8 +7,9 @@ import {
 import React, { useContext, useState } from "react";
 import { useRouter } from "expo-router";
 import styles from "./index.style";
-import { TextInput } from "react-native-gesture-handler";
+import { TextInput, Dropdown } from "../components";
 import { AuthContext } from "../context/authContext";
+import { COLORS } from "../constants";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const LoginPage = () => {
     router.replace("/home");
   };
   const handlePressRegister = () => {
-    router.replace("/modal");
+    router.replace("/register");
   };
 
   return (

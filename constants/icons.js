@@ -17,6 +17,9 @@ import login from "../assets/icons/enter.png";
 import logout from "../assets/icons/exit.png";
 import close from "../assets/icons/close.png";
 import enter from "../assets/icons/enter.png";
+import check from "../assets/icons/check.png";
+import back from "../assets/icons/back.png";
+import register from "../assets/icons/register.png";
 
 export default {
   heart,
@@ -38,4 +41,7 @@ export default {
   logout,
   close,
   enter,
+  check,
+  back,
+  register,
 };

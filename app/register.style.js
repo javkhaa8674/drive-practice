@@ -6,15 +6,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    marginTop: SIZES.medium,
   },
-  inputContainer: { width: "80%" },
-  input: {
-    backgroundColor: COLORS.lightWhite,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
+  heading: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: SIZES.xLarge,
+  },
+  headingText: {
+    marginTop: SIZES.medium,
+    fontSize: SIZES.medium,
+    color: COLORS.primary,
+  },
+  inputContainer: {
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnContainer: {
     width: "60%",

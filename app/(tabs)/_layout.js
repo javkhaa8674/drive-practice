@@ -1,7 +1,7 @@
 import { TouchableOpacity, Text } from "react-native";
 import React, { useContext } from "react";
 import { Tabs, useRouter } from "expo-router";
-import { FontAwesome5 } from "@expo/vector-icons";
+import Icons from "react-native-dynamic-vector-icons";
 import { AuthContext } from "../../context/authContext";
 
 const BottomTabs = () => {
@@ -14,7 +14,7 @@ const BottomTabs = () => {
           tabBarLabel: "Нүүр",
           headerTitle: "Нүүр хуудас",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="home" size={size} color={color} />
+            <Icons name="home" size={size} color={color} />
           ),
           headerLeft: () => (
             <TouchableOpacity
@@ -49,7 +49,7 @@ const BottomTabs = () => {
           tabBarLabel: "Бүртгэл",
           headerTitle: "Миний мэдээлэл",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="user" size={size} color={color} />
+            <Icons name="user" size={size} color={color} />
           ),
         }}
       />
@@ -59,7 +59,7 @@ const BottomTabs = () => {
           tabBarLabel: "Үйлчилгээ",
           headerTitle: "Цаг авах",
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="calendar" size={size} color={color} />
+            <Icons name="calendar" size={size} color={color} />
           ),
         }}
       />
@@ -69,7 +69,7 @@ const BottomTabs = () => {
           tabBarLabel: "Мэдээлэл",
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="newspaper" size={size} color={color} />
+            <Icons name="newspaper" size={size} color={color} />
           ),
         }}
       />

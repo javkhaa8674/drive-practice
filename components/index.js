@@ -12,6 +12,8 @@ import { default as JobAbout } from "./jobdetails/about/About";
 import { default as JobFooter } from "./jobdetails/footer/Footer";
 import Specifics from "./jobdetails/specifics/Specifics";
 import CheckBox from "./checkbox/checkbox";
+import TextInput from "./textInput/textInput";
+import Dropdown from "./dropdown/dropdown";
 
 // common
 import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
@@ -28,4 +30,6 @@ export {
   Specifics,
   NearbyJobCard,
   CheckBox,
+  TextInput,
+  Dropdown,
 };

@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   checkBoxText: {
     margin: 8,
     color: COLORS.primary,
-    fontWeight: FONT.lightItalic,
   },
   buttonContainer: {
     flex: 1,
@@ -48,6 +47,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   button: {
+    flexDirection: "row",
+    justifyContent: "center",
     backgroundColor: COLORS.primary,
     width: "40%",
     padding: SIZES.small,
@@ -55,20 +56,30 @@ const styles = StyleSheet.create({
     margin: SIZES.small,
     borderRadius: 50,
   },
+  buttonImage: {
+    width: 25,
+    height: 25,
+    tintColor: COLORS.lightWhite,
+  },
   buttonText: {
     color: COLORS.lightWhite,
-    fontWeight: 700,
     fontSize: SIZES.small,
+    marginLeft: 5,
   },
   buttonOutline: {
     backgroundColor: COLORS.lightWhite,
     borderColor: COLORS.primary,
     borderWidth: 1,
   },
+  buttonOutlineImage: {
+    tintColor: COLORS.primary,
+  },
   buttonOutlineText: {
     color: COLORS.primary,
-    fontWeight: 700,
     fontSize: SIZES.small,
+  },
+  disabled: {
+    backgroundColor: COLORS.gray2,
   },
 });
 
