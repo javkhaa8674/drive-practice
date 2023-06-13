@@ -14,6 +14,7 @@ import Specifics from "./jobdetails/specifics/Specifics";
 import CheckBox from "./checkbox/checkbox";
 import TextInput from "./textInput/textInput";
 import Dropdown from "./dropdown/dropdown";
+import Camera from "./camera/camera";
 
 // common
 import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
@@ -32,4 +33,5 @@ export {
   CheckBox,
   TextInput,
   Dropdown,
+  Camera,
 };

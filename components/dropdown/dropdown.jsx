@@ -1,5 +1,12 @@
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import React, { useCallback, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+  LogBox,
+  ScrollView,
+} from "react-native";
+import React, { useState, useEffect } from "react";
 import Icon from "react-native-dynamic-vector-icons";
 import { COLORS } from "../../constants";
 import styles from "./dropdown.style";
@@ -254,10 +261,19 @@ const CustomDropDown = ({
   iconType,
   iconSize,
   iconColor,
-  textColor,
+  selectedGender,
+  setSelectedGender,
 }) => {
   const [select, setSelected] = useState(name);
   const [isClicked, setIsClicked] = useState(false);
+
+  useEffect(() => {
+    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  }, []);
+
+  useEffect(() => {
+    setSelected(selectedGender);
+  }, [selectedGender]);
 
   return (
     <View style={styles.container}>
@@ -300,7 +316,7 @@ const CustomDropDown = ({
                 <TouchableOpacity
                   style={styles.countryItem}
                   onPress={() => {
-                    setSelected(item.gender);
+                    setSelectedGender(item.gender);
                     setIsClicked(false);
                   }}
                 >

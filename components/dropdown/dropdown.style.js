@@ -27,11 +27,11 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   dropdownArea: {
-    width: "90%",
+    width: "100%",
     borderRadius: 10,
-    marginTop: 20,
+    marginTop: 0,
     backgroundColor: COLORS.lightWhite,
-    elevation: 5,
+    elevation: 0,
     alignSelf: "center",
   },
   countryItem: {

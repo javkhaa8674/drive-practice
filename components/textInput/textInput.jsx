@@ -13,7 +13,8 @@ const TextInputComponents = ({
   keyboardType,
   secureTextEntry,
   value,
-  onChangeText
+  onChangeText,
+  multiline,
 }) => {
   return (
     <View style={styles.container}>
@@ -29,7 +30,7 @@ const TextInputComponents = ({
         placeholderTextColor={placeholderTextColor}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
-        multiline={true}
+        multiline={multiline}
         style={styles.textInput}
         value={value}
         onChangeText={onChangeText}

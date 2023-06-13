@@ -76,6 +76,12 @@ const Layout = () => {
                 onPress={() => router.push("/modal")}
               />
             ),
+            headerLeft: () => (
+              <Button
+                title="Take Picture"
+                onPress={() => router.push("/camera")}
+              />
+            ),
           }}
         />
         <Stack.Screen

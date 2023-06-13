@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
   },
   btnContainer: {
     width: "60%",
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 40,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginTop: 20,
+    paddingBottom: 40,
   },
   button: {
     backgroundColor: COLORS.primary,
