@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
   View,
-  TextInput,
   Text,
   Pressable,
   Platform,
   TouchableOpacity,
 } from "react-native";
+import { TextInput } from "react-native-paper";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -56,16 +56,9 @@ const DatePickerComponents = ({
     <View style={styles.container}>
       {!showPicker && (Platform.OS === "ios" || Platform.OS === "android") && (
         <Pressable onPress={toggleDatePicker} style={{ flexDirection: "row" }}>
-          <Icon
-            name={iconName}
-            type={iconType}
-            size={iconSize}
-            color={iconColor}
-            style={styles.icon}
-          />
           <TextInput
-            placeholder={placeholder}
-            placeholderTextColor={placeholderTextColor}
+            left={<TextInput.Icon icon="calendar" />}
+            label={placeholder}
             style={styles.textInput}
             value={dateOfBirth}
             onChangeText={setDateOfBirth}
@@ -98,7 +91,6 @@ const DatePickerComponents = ({
                   styles.pickerButton,
                   {
                     borderColor: COLORS.primary,
-                    borderWidth: 1,
                   },
                 ]}
               >
@@ -126,7 +118,7 @@ const DatePickerComponents = ({
       )}
       {/* Web version can be seen here */}
       {Platform.OS === "web" && (
-        <View //Web version can be seen here
+        <View 
           style={{
             flex: 1,
             justifyContent: "center",
@@ -142,7 +134,7 @@ const DatePickerComponents = ({
                 label="Төрсөн өдөр"
                 defaultValue={dayjs("2022-04-17")}
                 sx={{ width: "100%" }}
-                variant="static"
+                className="flat"
               />
             </DemoContainer>
           </LocalizationProvider>

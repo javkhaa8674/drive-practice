@@ -1,17 +1,19 @@
+import { useMemo, useState } from "react";
 import {
   View,
   Text,
   KeyboardAvoidingView,
   TouchableOpacity,
   ScrollView,
+  Alert,
+  Platform,
 } from "react-native";
-import { useMemo, useState } from "react";
 import { useRouter } from "expo-router";
 import Icon from "react-native-dynamic-vector-icons";
-
 import styles from "./register.style";
 import { COLORS } from "../constants";
-import { Dropdown, TextInput } from "../components";
+import { Dropdown } from "../components";
+import { TextInput } from "react-native-paper";
 import DatePickerComponents from "../components/dateTimePicker/datePicker";
 
 const RegisterPage = () => {
@@ -24,6 +26,9 @@ const RegisterPage = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [secure, setSecure] = useState(true);
+  const [confirmSecure, setConfirmSecure] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const router = useRouter();
 
@@ -35,64 +40,128 @@ const RegisterPage = () => {
     []
   );
 
+  const handleSubmit = () => {
+    let userInfo = {
+      phoneNumber,
+      anotherPhoneNumber,
+      email,
+      lastName,
+      firstName,
+      selectedGender,
+      dateOfBirth,
+      password,
+      confirmPassword,
+    };
+
+    let check = false;
+    for (let key in userInfo) {
+      if (userInfo[key] === "") {
+        check = true;
+      }
+    }
+    if (check) {
+      Alert.alert("Та бүх талбарийг бөглөнө үү.");
+      if (Platform.OS == "web") {
+        alert("Та бүх талбарийг бөглөнө үү.");
+      }
+    }
+  };
+
   return (
     <ScrollView>
       <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <View style={styles.heading}>
-          <Icon name="address-card" type="FontAwesome" color={COLORS.primary} />
-          <Text style={styles.headingText}>Бүртгүүлэх</Text>
-        </View>
+        <TouchableOpacity
+          style={styles.heading}
+          onPress={() => router.push("/camera")}
+        >
+          <Icon
+            name="account"
+            type="MaterialCommunityIcons"
+            color={COLORS.white}
+            size={150}
+          />
+        </TouchableOpacity>
         <View style={styles.inputContainer}>
           <TextInput
-            iconName="call"
-            iconType="MaterialIcons"
-            iconColor={COLORS.primary}
-            placeholder="Утасны дугаар 1"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="phone-pad"
-            multiline={false}
+            left={<TextInput.Icon icon="phone" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Утасны дугаар 1"
             value={phoneNumber}
             onChangeText={setPhoneNumber}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="phone-pad"
+            // error={true}
           />
           <TextInput
-            iconName="call"
-            iconType="MaterialIcons"
-            iconColor={COLORS.primary}
-            placeholder="Утасны дугаар 2"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="phone-pad"
+            left={<TextInput.Icon icon="phone" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Утасны дугаар 2"
             value={anotherPhoneNumber}
             onChangeText={setAnotherPhoneNumber}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="phone-pad"
           />
           <TextInput
-            iconName="mail"
-            iconType="MaterialIcons"
-            iconColor={COLORS.primary}
-            placeholder="И-Мэйл хаяг"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="email-address"
+            left={<TextInput.Icon icon="mail" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="И-Мэйл хаяг"
             value={email}
             onChangeText={setEmail}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="email-address"
           />
           <TextInput
-            iconName="person"
-            iconType="MaterialIcons"
-            iconColor={COLORS.primary}
-            placeholder="Овог"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="default"
+            left={<TextInput.Icon icon="account" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Овог"
             value={lastName}
             onChangeText={setLastName}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="default"
           />
           <TextInput
-            iconName="person"
-            iconType="MaterialIcons"
-            iconColor={COLORS.primary}
-            placeholder="Нэр"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="default"
+            left={<TextInput.Icon icon="account" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Нэр"
             value={firstName}
             onChangeText={setFirstName}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="default"
           />
           <Dropdown
             data={genderList}
@@ -113,6 +182,49 @@ const RegisterPage = () => {
             setDateOfBirth={setDateOfBirth}
           />
           <TextInput
+            left={<TextInput.Icon icon="lock" />}
+            right={
+              <TextInput.Icon icon="eye" onPress={() => setSecure(!secure)} />
+            }
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Нууц үг"
+            value={password}
+            onChangeText={setPassword}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="default"
+            secureTextEntry={secure}
+          />
+          <TextInput
+            left={<TextInput.Icon icon="lock" />}
+            right={
+              <TextInput.Icon
+                icon="eye"
+                onPress={() => setConfirmSecure(!confirmSecure)}
+              />
+            }
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Нууц үг давтаж оруулна уу?"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            style={{
+              width: "100%",
+              marginTop: 20,
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="default"
+            secureTextEntry={confirmSecure}
+          />
+          {/* <TextInput
             iconName="lock"
             iconType="FontAwesome"
             iconColor={COLORS.primary}
@@ -134,10 +246,10 @@ const RegisterPage = () => {
             multiline={false}
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-          />
+          /> */}
         </View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={() => router.back()} style={styles.button}>
+          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

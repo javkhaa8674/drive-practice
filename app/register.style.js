@@ -13,6 +13,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: SIZES.xLarge,
+    backgroundColor: COLORS.tertiary,
+    width: 150,
+    height: 150,
+    borderRadius: "50%",
   },
   headingText: {
     marginTop: SIZES.medium,

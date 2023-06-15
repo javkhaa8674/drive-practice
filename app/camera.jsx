@@ -1,5 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+  Platform,
+  Alert,
+  Image,
+} from "react-native";
 import {
   Camera,
   CameraType,
@@ -9,29 +18,47 @@ import {
   getMicrophonePermissionsAsync,
 } from "expo-camera";
 import Icon from "react-native-dynamic-vector-icons";
+import * as ImagePicker from "expo-image-picker";
 
 import { COLORS } from "../constants";
 
 const CameraPage = () => {
-  const [camera, setCamera] = useState(null);
+  const [cameraPermission, setCameraPermission] = useState(null);
+  const [showCamera, setShowCamera] = useState(true);
   const [image, setImage] = useState(null);
+  const [imageData, setImageData] = useState(null);
   const [flashMode, setFlashMode] = useState("off");
-  const [type, setType] = useState(Camera.Constants.Type.front);
+  const [type, setType] = useState(CameraType.front);
+
   const cameraRef = useRef();
 
   useEffect(() => {
-    requestPermissions();
+    (async () => {
+      // Camera
+      const { status } = await requestCameraPermissionsAsync();
+      setCameraPermission(status === "granted");
+
+      if (Platform.OS === "web") {
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
   }, []);
 
-  const requestPermissions = async () => {
-    await requestCameraPermissionsAsync();
-    await requestMicrophonePermissionsAsync();
-  };
+  if (cameraPermission === "null") {
+    return <View />;
+  }
+
+  if (cameraPermission === "false") {
+    return <Text>No Access to Camera</Text>;
+  }
 
   const getPermissions = async () => {
     const cameraPermission = await getCameraPermissionsAsync();
-    const microphonePermission = await getMicrophonePermissionsAsync();
-    return cameraPermission.granted && microphonePermission.granted;
+    return cameraPermission.granted;
   };
 
   if (!getPermissions()) {
@@ -42,58 +69,76 @@ const CameraPage = () => {
     );
   }
 
-  const takePicture = async () => {
-    const { uri, width, height } = await cameraRef?.current.takePictureAsync();
-    // if (camera) {
-    //   const data = await camera.takePictureAsync(null);
-    //   setImage(data.uri);
-    // }
-    console.log("uri", uri);
-    setImage(uri);
-  };
-
   const switchFlashMode = () => {
     setFlashMode(flashMode === "off" ? "on" : "off");
   };
 
   const switchType = () => {
-    setType(type === CameraType.back ? Camera.front : Camera.back);
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
+  };
+
+  const takePicture = async () => {
+    if (cameraRef) {
+      console.log("in take picture");
+    }
+    try {
+      let photo = await cameraRef.current.takePictureAsync({
+        allowsEditing: true,
+        aspectRatio: [4, 3],
+        quality: 1,
+      });
+      return photo;
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.cameraContainer}>
-        <Camera
-          ref={cameraRef}
-          style={styles.fixedRatio}
-          type={type}
-          ratio={"1:1"}
-          flashMode={flashMode}
-        />
-      </View>
-      <View style={styles.controlsContainer}>
-        <Icon
-          name="refresh-ccw"
-          type="Feather"
-          color={COLORS.primary}
-          style={styles.button}
-          onPress={switchType}
-        />
+      {showCamera ? (
+        <View style={{ flex: 1 }}>
+          <View style={styles.cameraContainer}>
+            <Camera
+              ref={cameraRef}
+              style={styles.fixedRatio}
+              type={type}
+              flashMode={flashMode}
+            />
+          </View>
+          <View style={styles.controlsContainer}>
+            <Icon
+              name="refresh-ccw"
+              type="Feather"
+              color={COLORS.primary}
+              style={styles.button}
+              onPress={switchType}
+            />
 
-        <TouchableOpacity
-          style={styles.takePictureButton}
-          onPress={takePicture}
-        />
+            <TouchableOpacity
+              style={styles.takePictureButton}
+              onPress={async () => {
+                const r = await takePicture();
+                setImage(r.uri);
+                setShowCamera(false);
+              }}
+            />
 
-        <Icon
-          name={flashMode === "on" ? "zap" : "zap-off"}
-          type="Feather"
-          color={COLORS.primary}
-          style={styles.button}
-          onPress={switchFlashMode}
-        />
-        {image && <Image source={{ uri: image }} style={{ flex: 1 }} />}
-      </View>
+            <Icon
+              name={flashMode === "on" ? "zap" : "zap-off"}
+              type="Feather"
+              color={COLORS.primary}
+              style={styles.button}
+              onPress={switchFlashMode}
+            />
+          </View>
+        </View>
+      ) : (
+        <View style={{ flex: 1 }}>
+          <Image source={{ uri: image }} style={{ flex: 1 }} />
+        </View>
+      )}
     </View>
   );
 };
@@ -110,13 +155,12 @@ const styles = StyleSheet.create({
   },
   fixedRatio: {
     flex: 1,
-    aspectRatio: 1,
   },
   controlsContainer: {
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: COLORS.primary,
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignItems: "center",
