@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import Icon from "react-native-dynamic-vector-icons";
+import firebase from "../api/firebase/config";
+
 import styles from "./register.style";
 import { COLORS } from "../constants";
 import { Dropdown } from "../components";
@@ -40,19 +42,7 @@ const RegisterPage = () => {
     []
   );
 
-  const handleSubmit = () => {
-    let userInfo = {
-      phoneNumber,
-      anotherPhoneNumber,
-      email,
-      lastName,
-      firstName,
-      selectedGender,
-      dateOfBirth,
-      password,
-      confirmPassword,
-    };
-
+  const signup = async ({ email, password }) => {
     let check = false;
     for (let key in userInfo) {
       if (userInfo[key] === "") {
@@ -60,9 +50,86 @@ const RegisterPage = () => {
       }
     }
     if (check) {
-      Alert.alert("Та бүх талбарийг бөглөнө үү.");
-      if (Platform.OS == "web") {
+      if (Platform.OS === "web") {
         alert("Та бүх талбарийг бөглөнө үү.");
+      } else {
+        Alert.alert("Та бүх талбарийг бөглөнө үү.");
+      }
+      return;
+    }
+    if (password !== confirmPassword) {
+      if (Platform.OS === "web") {
+        alert("Таны давтаж оруулсан нууц үг ижил биш байна.");
+      } else {
+        Alert.alert("Таны давтаж оруулсан нууц үг ижил биш байна.");
+      }
+      return;
+    }
+    setIsLoading(true);
+
+    try {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          firebase
+            .auth()
+            .currentUser.sendEmailVerification({
+              handleCodeInApp: true,
+              url: "https://dadlaga-driver.firebaseapp.com",
+            })
+            .then(() => {
+              if (Platform.OS === "web") {
+                alert("Verification email sent");
+              } else {
+                Alert.alert("Verification email sent");
+              }
+            })
+            .catch((error) => {
+              if (Platform.OS === "web") {
+                alert(error.message);
+              } else {
+                Alert.alert(error.message);
+              }
+            })
+            .then(() => {
+              firebase
+                .firestore()
+                .collection("users")
+                .doc(app.auth().currentUser.uid)
+                .set({
+                  lastName,
+                  firstName,
+                  phoneNumber,
+                  anotherPhoneNumber,
+                  email,
+                  selectedGender,
+                  dateOfBirth,
+                });
+            })
+            .catch((error) => {
+              if (Platform.OS === "web") {
+                alert(error.message);
+              } else {
+                Alert.alert(error.message);
+              }
+            });
+        })
+        .catch((error) => {
+          if (Platform.OS === "web") {
+            alert(error.message);
+          } else {
+            Alert.alert(error.message);
+          }
+        });
+      setIsLoading(false);
+    } catch (error) {
+      if (Platform.OS === "web") {
+        alert(error.message);
+        setIsLoading(false);
+      } else {
+        Alert.alert(error.message);
+        setIsLoading(false);
       }
     }
   };
@@ -224,32 +291,9 @@ const RegisterPage = () => {
             keyboardType="default"
             secureTextEntry={confirmSecure}
           />
-          {/* <TextInput
-            iconName="lock"
-            iconType="FontAwesome"
-            iconColor={COLORS.primary}
-            secureTextEntry={true}
-            placeholder="Нууц үг"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="default"
-            value={password}
-            onChangeText={setPassword}
-          />
-          <TextInput
-            iconName="lock"
-            iconType="FontAwesome"
-            iconColor={COLORS.primary}
-            placeholder="Нууц үг давтаж оруулна уу?"
-            placeholderTextColor={COLORS.gray}
-            keyboardType="default"
-            secureTextEntry={true}
-            multiline={false}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          /> */}
         </View>
         <View style={styles.btnContainer}>
-          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+          <TouchableOpacity onPress={signup} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

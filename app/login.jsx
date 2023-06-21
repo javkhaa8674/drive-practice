@@ -19,7 +19,6 @@ const LoginPage = () => {
   const [secure, setSecure] = useState(true);
 
   const handlePressLogin = () => {
-    // login();
     router.replace("/home");
   };
   const handlePressRegister = () => {

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Button } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { useFonts } from "expo-font";
@@ -24,6 +24,7 @@ const Layout = () => {
     thin: require("../assets/fonts/Roboto-Thin.ttf"),
     thinItalic: require("../assets/fonts/Roboto-ThinItalic.ttf"),
   });
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
       await SplashScreen.hideAsync();

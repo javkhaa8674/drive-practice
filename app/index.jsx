@@ -8,7 +8,7 @@ const App = () => {
   const router = useRouter();
   const segments = useSegments();
   const navigationState = useRootNavigationState();
-  const { userToken } = useContext(AuthContext);
+  console.log(navigationState);
 
   useEffect(() => {
     if (!navigationState?.key) return;
