@@ -1,9 +1,7 @@
 import { useCallback, useState } from "react";
-import { Button } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import { AuthProvider } from "../context/authContext";
 import { COLORS, FONT } from "../constants/theme";
 
 SplashScreen.preventAutoHideAsync();
@@ -36,67 +34,19 @@ const Layout = () => {
   }
 
   return (
-    <AuthProvider>
-      <Stack
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: COLORS.primary,
-          },
-          headerTintColor: COLORS.lightWhite,
-          headerTitleStyle: {
-            fontWeight: FONT.bold,
-          },
-          headerTitleAlign: "center",
-        }}
-        onLayout={onLayoutRootView}
-      >
-        <Stack.Screen
-          name="index"
-          options={{
-            // Hide the header for all other routes.
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="login"
-          options={{
-            headerTitle: "Нэвтрэх",
-            // Hide the header for all other routes.
-            headerShown: true,
-          }}
-        />
-        <Stack.Screen
-          name="register"
-          options={{
-            headerTitle: "Бүртгүүлэх",
-            // Hide the header for all other routes.
-            headerShown: true,
-            headerRight: () => (
-              <Button
-                title="Open Modal"
-                onPress={() => router.push("/modal")}
-              />
-            ),
-            headerLeft: () => (
-              <Button
-                title="Take Picture"
-                onPress={() => router.push("/camera")}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="modal"
-          options={{
-            presentation: "modal",
-            headerLeft: () => (
-              <Button title="Close" onPress={() => router.replace("/login")} />
-            ),
-          }}
-        />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </AuthProvider>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: COLORS.primary,
+        },
+        headerTintColor: COLORS.lightWhite,
+        headerTitleStyle: {
+          fontWeight: FONT.bold,
+        },
+        headerTitleAlign: "center",
+      }}
+      onLayout={onLayoutRootView}
+    />
   );
 };
 export default Layout;

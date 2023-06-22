@@ -1,24 +1,33 @@
 import { View, ActivityIndicator } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect  } from "react";
 import { useRouter, useSegments, useRootNavigationState } from "expo-router";
-import { AuthContext } from "../context/authContext";
+import { AuthStore } from "../store/authStore";
 import { COLORS } from "../constants";
 
 const App = () => {
-  const router = useRouter();
   const segments = useSegments();
+  const router = useRouter();
   const navigationState = useRootNavigationState();
-  console.log(navigationState);
+  const { initialized, isLoggedIn } = AuthStore.useState();
 
   useEffect(() => {
-    if (!navigationState?.key) return;
-    const tabs = segments[0] === "tabs";
-    if (userToken === null && !tabs) {
+    if (!navigationState?.key || !initialized) return;
+
+    const inAuthGroup = segments[0] === "(auth)";
+
+    if (
+      //if user is not signed in and initial segment is not anything
+      // segment is not anything in the auth group
+      !isLoggedIn &&
+      !inAuthGroup
+    ) {
+      // redirect to the login page
       router.replace("/login");
-    } else if (userToken !== null) {
-      router.replace("/home");
+    } else if (isLoggedIn) {
+      // go to the tab root
+      router.replace("(tabs)/home");
     }
-  }, [userToken === null, segments, navigationState?.key]);
+  }, [segments, navigationState?.key, initialized]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

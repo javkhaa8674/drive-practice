@@ -7,16 +7,16 @@ import {
   ScrollView,
   Alert,
   Platform,
+  ActivityIndicator,
 } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, Stack } from "expo-router";
 import Icon from "react-native-dynamic-vector-icons";
-import firebase from "../api/firebase/config";
-
 import styles from "./register.style";
-import { COLORS } from "../constants";
-import { Dropdown } from "../components";
+import { COLORS } from "../../constants";
+import { Dropdown } from "../../components";
 import { TextInput } from "react-native-paper";
-import DatePickerComponents from "../components/dateTimePicker/datePicker";
+import DatePickerComponents from "../../components/dateTimePicker/datePicker";
+import { appSignUp, AuthStore } from "../../store/authStore";
 
 const RegisterPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -30,8 +30,7 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [secure, setSecure] = useState(true);
   const [confirmSecure, setConfirmSecure] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-
+  const { loading } = AuthStore.useState();
   const router = useRouter();
 
   const genderList = useMemo(
@@ -42,13 +41,24 @@ const RegisterPage = () => {
     []
   );
 
-  const signup = async ({ email, password }) => {
+  const signup = async () => {
     let check = false;
-    for (let key in userInfo) {
-      if (userInfo[key] === "") {
-        check = true;
+    let userInfo = [
+      phoneNumber,
+      anotherPhoneNumber,
+      email,
+      lastName,
+      firstName,
+      selectedGender,
+      dateOfBirth,
+      password,
+      confirmPassword,
+    ];
+    userInfo.forEach((el) => {
+      if (el === "") {
+        check = "true";
       }
-    }
+    });
     if (check) {
       if (Platform.OS === "web") {
         alert("Та бүх талбарийг бөглөнө үү.");
@@ -65,78 +75,65 @@ const RegisterPage = () => {
       }
       return;
     }
-    setIsLoading(true);
 
-    try {
-      await firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          firebase
-            .auth()
-            .currentUser.sendEmailVerification({
-              handleCodeInApp: true,
-              url: "https://dadlaga-driver.firebaseapp.com",
-            })
-            .then(() => {
-              if (Platform.OS === "web") {
-                alert("Verification email sent");
-              } else {
-                Alert.alert("Verification email sent");
-              }
-            })
-            .catch((error) => {
-              if (Platform.OS === "web") {
-                alert(error.message);
-              } else {
-                Alert.alert(error.message);
-              }
-            })
-            .then(() => {
-              firebase
-                .firestore()
-                .collection("users")
-                .doc(app.auth().currentUser.uid)
-                .set({
-                  lastName,
-                  firstName,
-                  phoneNumber,
-                  anotherPhoneNumber,
-                  email,
-                  selectedGender,
-                  dateOfBirth,
-                });
-            })
-            .catch((error) => {
-              if (Platform.OS === "web") {
-                alert(error.message);
-              } else {
-                Alert.alert(error.message);
-              }
-            });
-        })
-        .catch((error) => {
-          if (Platform.OS === "web") {
-            alert(error.message);
-          } else {
-            Alert.alert(error.message);
-          }
-        });
-      setIsLoading(false);
-    } catch (error) {
-      if (Platform.OS === "web") {
-        alert(error.message);
-        setIsLoading(false);
+    // Spinner starting .....
+    AuthStore.update((store) => {
+      store.loading = true;
+    });
+
+    const resp = await appSignUp(
+      phoneNumber,
+      anotherPhoneNumber,
+      email,
+      lastName,
+      firstName,
+      selectedGender,
+      dateOfBirth,
+      password,
+      lastName + " " + firstName
+    );
+    if (resp?.user) {
+      router.replace("/(tabs)/home");
+    } else {
+      if (error.code === "auth/email-already-in-use") {
+        console.log("That email address is already in use!");
+        Platform.OS === " web"
+          ? alert("That email address is already in use!")
+          : Alert.alert("That email address is already in use!");
+      }
+
+      if (error.code === "auth/invalid-email") {
+        console.log("That email address is invalid!");
+        Platform.OS === " web"
+          ? alert("That email address is invalid!")
+          : Alert.alert("That email address is invalid!");
       } else {
-        Alert.alert(error.message);
-        setIsLoading(false);
+        console.log(resp.error);
+        Platform.OS === " web"
+          ? alert("SignUp error:", resp?.error)
+          : Alert.alert("SignUp error:", resp?.error);
       }
     }
   };
 
   return (
     <ScrollView>
+      <Stack.Screen
+        options={{ title: "Create Account", headerLeft: () => <></> }}
+      />
       <KeyboardAvoidingView style={styles.container} behavior="padding">
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            color={COLORS.primary}
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              zIndex: "1",
+            }}
+          />
+        )}
         <TouchableOpacity
           style={styles.heading}
           onPress={() => router.push("/camera")}

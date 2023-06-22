@@ -47,6 +47,10 @@ const DatePickerComponents = ({
     }
   };
 
+  const onChangeWeb = (e) => {
+    setDateOfBirth(date.toLocaleDateString());
+  };
+
   const confirmIOSDate = () => {
     setDateOfBirth(date.toLocaleDateString());
     toggleDatePicker();
@@ -118,7 +122,7 @@ const DatePickerComponents = ({
       )}
       {/* Web version can be seen here */}
       {Platform.OS === "web" && (
-        <View 
+        <View
           style={{
             flex: 1,
             justifyContent: "center",
@@ -132,9 +136,10 @@ const DatePickerComponents = ({
             >
               <MobileDatePicker
                 label="Төрсөн өдөр"
-                defaultValue={dayjs("2022-04-17")}
+                value={dayjs(date)}
                 sx={{ width: "100%" }}
                 className="flat"
+                onChange={(newValue) => onChangeWeb(newValue)}
               />
             </DemoContainer>
           </LocalizationProvider>
