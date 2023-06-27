@@ -19,11 +19,17 @@ const CustomDrawer = (props) => {
           source={images.backgroundImg}
           style={styles.ImageBackground}
         >
-          <Image source={images.profile} style={styles.Image} />
-          <Text style={styles.ImageText}>Дорж Бат</Text>
-          <Text style={[styles.ImageText, styles.ImageTextSecond]}>
-            Миний мэдээлэл
-          </Text>
+          <TouchableOpacity onPress={() => {}}>
+            <Image source={images.profile} style={styles.Image} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={styles.ImageText}>Дорж Бат</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}}>
+            <Text style={[styles.ImageText, styles.ImageTextSecond]}>
+              Миний мэдээлэл
+            </Text>
+          </TouchableOpacity>
         </ImageBackground>
         <View style={styles.DrawerItemContainer}>
           <DrawerItemList {...props} />

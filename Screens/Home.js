@@ -1,10 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { images } from "../constants";
 
 const Home = () => {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
+      <View style={styles.textContainer}>
+        <Text style={styles.imageText}>Сайн байна уу?</Text>
+        <Text style={styles.imageText}>Ганбаяр Батболд</Text>
+      </View>
+      <Image source={images.profile} style={styles.image} />
     </View>
   );
 };
@@ -14,7 +19,24 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex=start",
+    marginTop: 15,
+  },
+  textContainer: {
+    flexDirection: "column",
+  },
+
+  imageText: {
+    marginLeft: 10,
+    fontFamily: "Roboto-Medium",
+  },
+  image: {
+    marginRight: 10,
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    marginBottom: 10,
   },
 });
