@@ -294,6 +294,14 @@ const RegisterPage = ({ navigation }) => {
           />
         </View>
         <View style={styles.btnContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.goBack();
+            }}
+            style={[styles.button, styles.buttonOutline]}
+          >
+            <Text style={styles.buttonOutlineText}>Cancel</Text>
+          </TouchableOpacity>
           <TouchableOpacity onPress={signup} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
@@ -344,9 +352,20 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    marginTop: 5,
   },
   buttonText: {
     color: COLORS.lightWhite,
+    fontWeight: 700,
+    fontSize: SIZES.medium,
+  },
+  buttonOutline: {
+    backgroundColor: COLORS.lightWhite,
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+  },
+  buttonOutlineText: {
+    color: COLORS.primary,
     fontWeight: 700,
     fontSize: SIZES.medium,
   },

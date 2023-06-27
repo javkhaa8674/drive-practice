@@ -12,6 +12,7 @@ import {
 import {
   Camera,
   CameraType,
+  FlashMode,
   requestCameraPermissionsAsync,
   requestMicrophonePermissionsAsync,
   getCameraPermissionsAsync,
@@ -27,7 +28,7 @@ const CameraPage = () => {
   const [showCamera, setShowCamera] = useState(true);
   const [image, setImage] = useState(null);
   const [imageData, setImageData] = useState(null);
-  const [flashMode, setFlashMode] = useState("off");
+  const [flashMode, setFlashMode] = useState(FlashMode.off);
   const [type, setType] = useState(CameraType.front);
 
   const cameraRef = useRef();
@@ -38,7 +39,7 @@ const CameraPage = () => {
       const { status } = await requestCameraPermissionsAsync();
       setCameraPermission(status === "granted");
 
-      if (Platform.OS === "web") {
+      if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {

@@ -4,11 +4,26 @@ import {
   DrawerContentScrollView,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { COLORS, FONT, SIZES, images } from "../../constants";
+import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native";
 import Icon, { IconType } from "react-native-dynamic-vector-icons";
 
+import { appSignOut, AuthStore } from "../../store/authStore";
+import { COLORS, FONT, SIZES, images } from "../../constants";
+
 const CustomDrawer = (props) => {
+  const navigation = useNavigation();
+  const { user, isLoggedIn, loading } = AuthStore.useState();
+
+  const HandleSignOut = async () => {
+    const resp = await appSignOut();
+    if (resp.user === null) {
+      navigation.replace("Login");
+    } else {
+      navigation.navigate("Parent");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <DrawerContentScrollView
@@ -36,7 +51,7 @@ const CustomDrawer = (props) => {
         </View>
       </DrawerContentScrollView>
       <View style={styles.BottomContainer}>
-        <TouchableOpacity onPress={() => {}} style={styles.Bottom}>
+        <TouchableOpacity onPress={HandleSignOut} style={styles.Bottom}>
           <Icon
             name="exit-to-app"
             type={IconType.MaterialCommunityIcons}

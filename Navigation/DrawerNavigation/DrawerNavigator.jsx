@@ -9,7 +9,7 @@ import Promotion from "../../Screens/Promotion";
 import CustomDrawer from "../../components/customDrawer/CustomDrawer";
 import { COLORS } from "../../constants";
 
-const DrawerNavigator = ({ navigation }) => {
+const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
 
   return (

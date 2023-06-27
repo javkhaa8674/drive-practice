@@ -11,10 +11,10 @@ import Camera from "./Auth/Camera";
 
 const Stack = createStackNavigator();
 
-const AppNavigator = ({ onLayoutRootView }) => {
+const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator onLayout={onLayoutRootView}>
+      <Stack.Navigator >
         <Stack.Screen
           name="Splash"
           component={Splash}
