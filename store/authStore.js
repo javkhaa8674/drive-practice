@@ -91,6 +91,7 @@ export const appSignUp = async (
       dateOfBirth,
       password,
       displayName,
+      role: "user",
     })
       .then(() => {
         //Data saved successfully

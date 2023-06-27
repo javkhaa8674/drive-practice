@@ -5,12 +5,12 @@ import {
   Pressable,
   Platform,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-dynamic-vector-icons";
-import styles from "./timePicker.style";
-import { COLORS } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
 
 const TimePickerComponents = ({
   iconName,
@@ -130,3 +130,41 @@ const TimePickerComponents = ({
 };
 
 export default TimePickerComponents;
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: COLORS.lightWhite,
+    margin: SIZES.small,
+    borderRadius: 15,
+  },
+  icon: { paddingHorizontal: 15, paddingVertical: 15 },
+  textInput: {
+    flex: 1,
+    fontSize: SIZES.medium,
+    color: COLORS.primary,
+    paddingTop: 15,
+    paddingVertical: 15,
+    borderRadius: 10,
+  },
+  timePicker: {
+    height: 120,
+    marginTop: -10,
+  },
+  button: {
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    marginTop: 5,
+    marginBottom: 15,
+    backgroundColor: COLORS.lightWhite,
+  },
+  pickerButton: {
+    paddingHorizontal: 20,
+  },
+  buttonText: { fontSize: 14, fontWeight: 500, color: COLORS.lightWhite },
+});

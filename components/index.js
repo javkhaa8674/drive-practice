@@ -15,6 +15,8 @@ import CheckBox from "./checkbox/checkbox";
 import TextInput from "./textInput/textInput";
 import Dropdown from "./dropdown/dropdown";
 import Camera from "./camera/camera";
+import DatePickerComponents from "./dateTimePicker/datePicker";
+import TimePickerComponents from "./dateTimePicker/timePicker";
 
 // common
 import NearbyJobCard from "./common/cards/nearby/NearbyJobCard";
@@ -34,4 +36,6 @@ export {
   TextInput,
   Dropdown,
   Camera,
+  DatePickerComponents,
+  TimePickerComponents,
 };

@@ -4,18 +4,17 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Platform,
-  Alert,
+  Image,
+  ActivityIndicator,
+  StyleSheet,
 } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-paper";
-import { useRouter, Stack } from "expo-router";
-import styles from "../index.style";
-import { COLORS } from "../../constants";
-import { AuthStore, appSignIn } from "../../store/authStore";
-import { ActivityIndicator } from "react-native";
 
-const LoginPage = () => {
-  const router = useRouter();
+import { COLORS, SIZES, images } from "../../../constants";
+import { AuthStore, appSignIn } from "../../../store/authStore";
+
+const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secure, setSecure] = useState(true);
@@ -27,7 +26,7 @@ const LoginPage = () => {
     });
     const resp = await appSignIn(email, password);
     if (resp?.user) {
-      router.replace("(tabs)/home");
+      navigation.navigate("Parent");
     } else {
       console.log("LoginPage", resp.error);
       Platform.OS === "web"
@@ -36,15 +35,11 @@ const LoginPage = () => {
     }
   };
   const handlePressRegister = () => {
-    AuthStore.update((e) => {
-      e.isLoggedIn = true;
-    });
-    router.replace("/register");
+    navigation.navigate("Register");
   };
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
-      <Stack.Screen options={{ title: "Login", headerLeft: () => <></> }} />
       {loading && (
         <ActivityIndicator
           size="large"
@@ -58,6 +53,9 @@ const LoginPage = () => {
         />
       )}
       <View style={styles.inputContainer}>
+        <View style={styles.imageContainer}>
+          <Image source={images.logo} resizeMode="cover" style={styles.image} />
+        </View>
         <TextInput
           left={<TextInput.Icon icon="email" />}
           underlineColor={COLORS.secondary}
@@ -111,3 +109,53 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputContainer: { width: "80%" },
+  imageContainer: { justifyContent: "center", alignItems: "center" },
+  image: {
+    width: 100,
+    height: 100,
+  },
+  input: {
+    backgroundColor: COLORS.lightWhite,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 10,
+    marginTop: 5,
+  },
+  btnContainer: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 40,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: COLORS.lightWhite,
+    fontWeight: 700,
+    fontSize: SIZES.medium,
+  },
+  buttonOutline: {
+    backgroundColor: COLORS.lightWhite,
+    marginTop: 5,
+    borderColor: COLORS.primary,
+    borderWidth: 1,
+  },
+  buttonOutlineText: {
+    color: COLORS.primary,
+    fontWeight: 700,
+    fontSize: SIZES.medium,
+  },
+});

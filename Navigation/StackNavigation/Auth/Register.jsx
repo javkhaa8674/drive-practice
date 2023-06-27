@@ -8,17 +8,16 @@ import {
   Alert,
   Platform,
   ActivityIndicator,
+  StyleSheet,
 } from "react-native";
-import { useRouter, Stack } from "expo-router";
 import Icon from "react-native-dynamic-vector-icons";
-import styles from "./register.style";
-import { COLORS } from "../../constants";
-import { Dropdown } from "../../components";
 import { TextInput } from "react-native-paper";
-import DatePickerComponents from "../../components/dateTimePicker/datePicker";
-import { appSignUp, AuthStore } from "../../store/authStore";
 
-const RegisterPage = () => {
+import { COLORS, SIZES } from "../../../constants";
+import { Dropdown, DatePickerComponents } from "../../../components";
+import { appSignUp, AuthStore } from "../../../store/authStore";
+
+const RegisterPage = ({ navigation }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [anotherPhoneNumber, setAnotherPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -31,7 +30,6 @@ const RegisterPage = () => {
   const [secure, setSecure] = useState(true);
   const [confirmSecure, setConfirmSecure] = useState(true);
   const { loading } = AuthStore.useState();
-  const router = useRouter();
 
   const genderList = useMemo(
     () => [
@@ -93,7 +91,7 @@ const RegisterPage = () => {
       lastName + " " + firstName
     );
     if (resp?.user) {
-      router.replace("/(tabs)/home");
+      navigation.navigate("Parent");
     } else {
       if (error.code === "auth/email-already-in-use") {
         console.log("That email address is already in use!");
@@ -118,9 +116,6 @@ const RegisterPage = () => {
 
   return (
     <ScrollView>
-      <Stack.Screen
-        options={{ title: "Create Account", headerLeft: () => <></> }}
-      />
       <KeyboardAvoidingView style={styles.container} behavior="padding">
         {loading && (
           <ActivityIndicator
@@ -136,13 +131,22 @@ const RegisterPage = () => {
         )}
         <TouchableOpacity
           style={styles.heading}
-          onPress={() => router.push("/camera")}
+          onPress={() => {
+            if (Platform.OS === "web") {
+              alert(
+                "Та гар утасны (android, ios) хувилбар дээр зураг оруулах боломжтой."
+              );
+              navigation.navigate("Register");
+            } else {
+              navigation.navigate("Camera");
+            }
+          }}
         >
           <Icon
             name="account"
             type="MaterialCommunityIcons"
             color={COLORS.white}
-            size={150}
+            size={100}
           />
         </TouchableOpacity>
         <View style={styles.inputContainer}>
@@ -300,3 +304,50 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: "15%",
+  },
+  heading: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: SIZES.xLarge,
+    backgroundColor: COLORS.tertiary,
+    width: 100,
+    height: 100,
+    borderRadius: "50%",
+  },
+  headingText: {
+    marginTop: SIZES.medium,
+    fontSize: SIZES.medium,
+    color: COLORS.primary,
+  },
+  inputContainer: {
+    width: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  btnContainer: {
+    width: "60%",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    marginTop: 20,
+    paddingBottom: 40,
+  },
+  button: {
+    backgroundColor: COLORS.primary,
+    width: "100%",
+    padding: 15,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: COLORS.lightWhite,
+    fontWeight: 700,
+    fontSize: SIZES.medium,
+  },
+});

@@ -20,7 +20,7 @@ import {
 import Icon from "react-native-dynamic-vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
-import { COLORS } from "../constants";
+import { COLORS } from "../../../constants";
 
 const CameraPage = () => {
   const [cameraPermission, setCameraPermission] = useState(null);

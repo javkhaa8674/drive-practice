@@ -5,6 +5,7 @@ import {
   Pressable,
   Platform,
   TouchableOpacity,
+  StyleSheet,
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
@@ -14,8 +15,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-dynamic-vector-icons";
-import styles from "./datePicket.style";
-import { COLORS } from "../../constants";
+import { COLORS,SIZES } from "../../constants";
 
 const DatePickerComponents = ({
   iconName,
@@ -150,3 +150,41 @@ const DatePickerComponents = ({
 };
 
 export default DatePickerComponents;
+
+const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    backgroundColor: COLORS.lightWhite,
+    marginTop: 40,
+  },
+  icon: { paddingHorizontal: 15, paddingVertical: 15 },
+  textInput: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  datePicker: {
+    // marginTop: 10,
+    // height: 120,
+    width: 320,
+    height: 260,
+    display: "flex",
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  button: {
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    marginTop: 5,
+    marginBottom: 15,
+    backgroundColor: COLORS.lightWhite,
+  },
+  pickerButton: {
+    paddingHorizontal: 20,
+  },
+  buttonText: { fontSize: 14, fontWeight: 500, color: COLORS.lightWhite },
+});

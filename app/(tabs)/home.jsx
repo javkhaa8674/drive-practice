@@ -1,11 +1,12 @@
 import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import React from "react";
+import IndividualCard from "../../components/common/cards/individual/individualCard";
 
 const HomePage = () => {
   return (
     <View style={styles.container}>
-      <Text>Нүүр хуудас</Text>
+      <IndividualCard />
     </View>
   );
 };

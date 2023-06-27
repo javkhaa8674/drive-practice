@@ -1,5 +1,5 @@
 import { View, ActivityIndicator } from "react-native";
-import React, { useEffect  } from "react";
+import React, { useEffect } from "react";
 import { useRouter, useSegments, useRootNavigationState } from "expo-router";
 import { AuthStore } from "../store/authStore";
 import { COLORS } from "../constants";
