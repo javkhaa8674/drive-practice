@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { images } from "../constants";
+import { images, FONT } from "../constants";
 
 const Home = () => {
   return (
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
 
   imageText: {
     marginLeft: 10,
-    fontFamily: "Roboto-Medium",
+    fontFamily: FONT.blackItalic,
   },
   image: {
     marginRight: 10,

@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-paper";
-
 import { COLORS, SIZES, images } from "../../../constants";
 import { AuthStore, appSignIn } from "../../../store/authStore";
 

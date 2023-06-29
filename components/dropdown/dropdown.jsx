@@ -4,7 +4,14 @@ import { TextInput } from "react-native-paper";
 import { COLORS } from "../../constants";
 import styles from "./dropdown.style";
 
-const CustomDropDown = ({ data, name, selectedGender, setSelectedGender }) => {
+const CustomDropDown = ({
+  data,
+  name,
+  iconName,
+  iconColor,
+  selectedGender,
+  setSelectedGender,
+}) => {
   const [select, setSelected] = useState(name);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -20,7 +27,7 @@ const CustomDropDown = ({ data, name, selectedGender, setSelectedGender }) => {
     <View style={styles.container}>
       <View style={styles.dropdownSelector}>
         <TextInput
-          left={<TextInput.Icon icon="gender-male-female" />}
+          left={<TextInput.Icon icon={iconName} iconColor={iconColor} />}
           right={
             isClicked ? (
               <TextInput.Icon

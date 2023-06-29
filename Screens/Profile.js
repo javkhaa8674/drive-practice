@@ -9,8 +9,8 @@ import {
 } from "react-native-paper";
 import imagePlaceHolder from "../assets/images/kemal.jpg";
 import { SafeAreaView } from "react-native";
-import Icon, { IconType } from "react-native-dynamic-vector-icons";
-import { COLORS } from "../constants";
+import Icon from "react-native-dynamic-vector-icons";
+import { COLORS, FONT, SIZES } from "../constants";
 
 const Profile = () => {
   return (
@@ -24,9 +24,9 @@ const Profile = () => {
                 <Title
                   style={[styles.title, { marginTop: 15, marginBottom: 5 }]}
                 >
-                  John Doe
+                  Батбаяр Ганзориг
                 </Title>
-                <Caption style={styles.caption}>@j_doe</Caption>
+                <Caption style={styles.caption}>@ganzorig_b</Caption>
               </View>
             </View>
           </View>
@@ -40,7 +40,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                Ulaanbaatar, Mongolia
+                Монгол улс, Улаанбаатар хот, Баянзүрх дүүрэг, 17-55 тоот
               </Text>
             </View>
             <View style={styles.row}>
@@ -51,7 +51,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                976-99585541
+                9958-5541
               </Text>
             </View>
             <View style={styles.row}>
@@ -62,7 +62,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                976-88554774
+                8855-4774
               </Text>
             </View>
             <View style={styles.row}>
@@ -98,11 +98,11 @@ const Profile = () => {
             ]}
           >
             <Title>40000₮</Title>
-            <Caption>Wallet</Caption>
+            <Caption>Түрийвч</Caption>
           </View>
           <View style={styles.infoBox}>
             <Title>12</Title>
-            <Caption>Orders</Caption>
+            <Caption>Захиалга</Caption>
           </View>
         </View>
         <View style={styles.menuWrapper}>
@@ -125,7 +125,7 @@ const Profile = () => {
                 color={COLORS.tertiary}
                 size={20}
               />
-              <Text style={styles.menuItemText}>Payment</Text>
+              <Text style={styles.menuItemText}>Төлбөр</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple>
@@ -136,7 +136,7 @@ const Profile = () => {
                 color={COLORS.tertiary}
                 size={20}
               />
-              <Text style={styles.menuItemText}>Tell your friends</Text>
+              <Text style={styles.menuItemText}>Найзаа урих</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple>
@@ -147,7 +147,7 @@ const Profile = () => {
                 color={COLORS.tertiary}
                 size={20}
               />
-              <Text style={styles.menuItemText}>Support</Text>
+              <Text style={styles.menuItemText}>Дэмжлэг</Text>
             </View>
           </TouchableRipple>
           <TouchableRipple>
@@ -158,7 +158,7 @@ const Profile = () => {
                 color={COLORS.tertiary}
                 size={20}
               />
-              <Text style={styles.menuItemText}>Settings</Text>
+              <Text style={styles.menuItemText}>Тохиргоо</Text>
             </View>
           </TouchableRipple>
         </View>
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: FONT.bold,
   },
   caption: {
     fontSize: 14,

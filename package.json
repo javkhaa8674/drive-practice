@@ -19,6 +19,7 @@
     "date-fns": "^2.30.0",
     "dayjs": "^1.11.8",
     "expo": "^48.0.7",
+    "expo-app-loading": "^2.1.1",
     "expo-camera": "~13.2.1",
     "expo-checkbox": "~2.3.1",
     "expo-constants": "~14.2.1",
@@ -50,7 +51,9 @@
     "react-native-tab-view": "^3.5.2",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "^0.18.12",
-    "react-navigation": "^4.4.4"
+    "react-navigation": "^4.4.4",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
+    "setimmediate": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

@@ -11,10 +11,11 @@ import Camera from "./Auth/Camera";
 
 const Stack = createStackNavigator();
 
-const AppNavigator = () => {
+const AppNavigator = (props) => {
+  console.log("props", props);
   return (
     <NavigationContainer>
-      <Stack.Navigator >
+      <Stack.Navigator>
         <Stack.Screen
           name="Splash"
           component={Splash}

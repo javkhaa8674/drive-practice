@@ -38,7 +38,7 @@ const CustomDrawer = (props) => {
             <Image source={images.profile} style={styles.Image} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.ImageText}>Дорж Бат</Text>
+            <Text style={styles.ImageText}>Батбаяр Ганзориг</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}}>
             <Text style={[styles.ImageText, styles.ImageTextSecond]}>
@@ -58,7 +58,7 @@ const CustomDrawer = (props) => {
             size={26}
             color={COLORS.primary}
           />
-          <Text style={styles.BottomText}>Sign Out</Text>
+          <Text style={styles.BottomText}>Гарах</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -81,11 +81,11 @@ const styles = StyleSheet.create({
   ImageText: {
     color: COLORS.white,
     fontSize: SIZES.medium,
-    fontFamily: "Roboto-Medium",
+    fontFamily: FONT.medium,
   },
   ImageTextSecond: {
     fontSize: SIZES.small,
-    fontFamily: "Roboto-Regular",
+    fontFamily: FONT.regular,
     color: COLORS.tertiary,
     marginTop: 5,
   },
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   BottomText: {
     fontSize: SIZES.medium,
-    fontFamily: "Roboto-Medium",
+    fontFamily: FONT.medium,
     marginLeft: 5,
   },
 });

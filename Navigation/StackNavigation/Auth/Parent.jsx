@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import DrawerNavigator from "../../DrawerNavigation/DrawerNavigator";
 
-const Parent = ({ navigation }) => {
+const Parent = (props) => {
   return (
     <View style={{ flex: 1 }}>
-      <DrawerNavigator navigation={navigation} />
+      <DrawerNavigator {...props} />
     </View>
   );
 };

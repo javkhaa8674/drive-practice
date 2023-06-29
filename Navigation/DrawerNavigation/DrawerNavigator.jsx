@@ -7,27 +7,27 @@ import Profile from "../../Screens/Profile";
 import Service from "../../Screens/Service";
 import Promotion from "../../Screens/Promotion";
 import CustomDrawer from "../../components/customDrawer/CustomDrawer";
-import { COLORS } from "../../constants";
+import { COLORS, FONT } from "../../constants";
 
-const DrawerNavigator = () => {
+const DrawerNavigator = (props) => {
   const Drawer = createDrawerNavigator();
 
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={{
-        headerShown: false,
-        drawerLabelStyle: { marginLeft: -25, fontFamily: "Roboto-Medium" },
+        headerShown: true,
+        drawerLabelStyle: { marginLeft: -25, fontFamily: FONT.medium },
         drawerActiveBackgroundColor: COLORS.primary,
         drawerActiveTintColor: COLORS.white,
         drawerInactiveTintColor: COLORS.primary,
       }}
     >
       <Drawer.Screen
-        name="Main"
+        name="Homes"
         component={Main}
         options={{
-          headerShown: true,
+          headerShown: false,
           drawerIcon: ({ color }) => (
             <Icons
               name="home"
@@ -39,10 +39,10 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Profile"
+        name="Profiles"
         component={Profile}
         options={{
-          headerShown: true,
+          headerShown: false,
           drawerIcon: ({ color }) => (
             <Icons
               name="account"
@@ -54,10 +54,10 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Service"
+        name="Services"
         component={Service}
         options={{
-          headerShown: true,
+          headerShown: false,
           drawerIcon: ({ color }) => (
             <Icons
               name="calendar"
@@ -69,10 +69,10 @@ const DrawerNavigator = () => {
         }}
       />
       <Drawer.Screen
-        name="Promotion"
+        name="Promotions"
         component={Promotion}
         options={{
-          headerShown: true,
+          headerShown: false,
           drawerIcon: ({ color }) => (
             <Icons
               name="newspaper"
