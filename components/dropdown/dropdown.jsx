@@ -26,37 +26,44 @@ const CustomDropDown = ({
   return (
     <View style={styles.container}>
       <View style={styles.dropdownSelector}>
-        <TextInput
-          left={<TextInput.Icon icon={iconName} iconColor={iconColor} />}
-          right={
-            isClicked ? (
-              <TextInput.Icon
-                icon="chevron-up"
-                onPress={() => setIsClicked(!isClicked)}
-                iconColor={COLORS.tertiary}
-              />
-            ) : (
-              <TextInput.Icon
-                icon="chevron-down"
-                onPress={() => setIsClicked(!isClicked)}
-              />
-            )
-          }
-          underlineColor={COLORS.white}
-          activeUnderlineColor={COLORS.tertiary}
-          activeOutlineColor={COLORS.white}
-          textColor={COLORS.primary}
-          label="Хүйс"
-          editable={false}
-          value={selectedGender}
-          style={[
-            styles.textInput,
-            isClicked && {
-              borderBottomWidth: 3,
-              borderBottomColor: COLORS.tertiary,
-            },
-          ]}
-        />
+        <TouchableOpacity
+          onPress={() => {
+            setIsClicked(!isClicked);
+          }}
+          style={{ width: "100%" }}
+        >
+          <TextInput
+            left={<TextInput.Icon icon={iconName} iconColor={iconColor} />}
+            right={
+              isClicked ? (
+                <TextInput.Icon
+                  icon="chevron-up"
+                  onPress={() => setIsClicked(!isClicked)}
+                  iconColor={COLORS.tertiary}
+                />
+              ) : (
+                <TextInput.Icon
+                  icon="chevron-down"
+                  onPress={() => setIsClicked(!isClicked)}
+                />
+              )
+            }
+            underlineColor={COLORS.white}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Хүйс"
+            editable={false}
+            value={selectedGender}
+            style={[
+              styles.textInput,
+              isClicked && {
+                borderBottomWidth: 3,
+                borderBottomColor: COLORS.tertiary,
+              },
+            ]}
+          />
+        </TouchableOpacity>
       </View>
       {isClicked ? (
         <View style={styles.dropdownArea}>

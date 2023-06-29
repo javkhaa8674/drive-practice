@@ -20,7 +20,9 @@ import enter from "../assets/icons/enter.png";
 import check from "../assets/icons/check.png";
 import back from "../assets/icons/back.png";
 import register from "../assets/icons/register.png";
-
+import facebook from "../assets/icons/facebook.png";
+import google from "../assets/icons/google.png";
+import twitter from "../assets/icons/twitter.png";
 export default {
   heart,
   menu,
@@ -44,4 +46,7 @@ export default {
   check,
   back,
   register,
+  facebook,
+  twitter,
+  google,
 };

@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { TextInput } from "react-native-paper";
-import { COLORS, SIZES, images } from "../../../constants";
+import { COLORS, SIZES, images, FONT, icons } from "../../../constants";
 import { AuthStore, appSignIn } from "../../../store/authStore";
+import { Alert } from "react-native";
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -20,21 +21,34 @@ const LoginPage = ({ navigation }) => {
   const { loading } = AuthStore.useState();
 
   const handlePressLogin = async () => {
-    AuthStore.update((store) => {
-      store.loading = true;
-    });
-    const resp = await appSignIn(email, password);
-    if (resp?.user) {
-      navigation.navigate("Parent");
+    if (email === "" || password === "") {
+      if (Platform.OS === "web") {
+        alert("Та нэвтрэх нэр, нууц үгээ оруулна уу?");
+      } else {
+        Alert.alert("Та нэвтрэх нэр, нууц үгээ оруулна уу?");
+      }
+      navigation.navigate("Login");
     } else {
-      console.log("LoginPage", resp.error);
-      Platform.OS === "web"
-        ? alert(resp?.error)
-        : Alert.alert("Login Error:", resp?.error);
+      AuthStore.update((store) => {
+        store.loading = true;
+      });
+      const resp = await appSignIn(email, password);
+      if (resp?.user) {
+        navigation.navigate("Parent");
+      } else {
+        console.log("LoginPage", resp.error);
+        Platform.OS === "web"
+          ? alert(resp?.error)
+          : Alert.alert("Login Error:", resp?.error);
+      }
     }
   };
   const handlePressRegister = () => {
     navigation.navigate("Register");
+  };
+
+  const handlePressForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
   };
 
   return (
@@ -56,7 +70,7 @@ const LoginPage = ({ navigation }) => {
           <Image source={images.logo} resizeMode="cover" style={styles.image} />
         </View>
         <TextInput
-          left={<TextInput.Icon icon="email" />}
+          left={<TextInput.Icon icon="account-outline" />}
           underlineColor={COLORS.secondary}
           activeUnderlineColor={COLORS.tertiary}
           activeOutlineColor={COLORS.white}
@@ -94,13 +108,85 @@ const LoginPage = ({ navigation }) => {
       </View>
       <View style={styles.btnContainer}>
         <TouchableOpacity onPress={handlePressLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Нэвтрэх</Text>
+        </TouchableOpacity>
+        <Text style={{ marginTop: 15, color: COLORS.gray }}>эсвэл...</Text>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          marginTop: 15,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: COLORS.primary,
+            paddingHorizontal: 15,
+            marginRight: 15,
+            paddingVertical: 5,
+          }}
+        >
+          <Image source={icons.google} style={{ width: 50, height: 50 }} />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handlePressRegister}
-          style={[styles.button, styles.buttonOutline]}
+          style={{
+            flex: 1,
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: COLORS.primary,
+            paddingHorizontal: 15,
+            paddingVertical: 5,
+          }}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
+          <Image source={icons.facebook} style={{ width: 45, height: 45 }} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: COLORS.primary,
+            paddingHorizontal: 15,
+            marginLeft: 15,
+            paddingVertical: 5,
+          }}
+        >
+          <Image source={icons.twitter} style={{ width: 50, height: 50 }} />
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 15,
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            color: COLORS.primary,
+            fontSize: SIZES.small,
+            fontFamily: FONT.light,
+          }}
+        >
+          Шинэ үйлчлүүлэгч бол?
+        </Text>
+        <TouchableOpacity
+          onPress={handlePressRegister}
+          style={{ color: COLORS.tertiary }}
+        >
+          <Text style={styles.buttonOutlineText}>Бүртгүүлэх</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{ marginTop: 10 }}>
+        <TouchableOpacity
+          onPress={handlePressForgotPassword}
+          style={{ color: COLORS.tertiary }}
+        >
+          <Text style={styles.buttonOutlineText}>Нууц үг мартсан?</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -143,8 +229,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: COLORS.lightWhite,
-    fontWeight: 700,
-    fontSize: SIZES.medium,
+    fontWeight: 200,
+    fontSize: SIZES.large,
   },
   buttonOutline: {
     backgroundColor: COLORS.lightWhite,
@@ -153,8 +239,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   buttonOutlineText: {
-    color: COLORS.primary,
-    fontWeight: 700,
-    fontSize: SIZES.medium,
+    color: COLORS.tertiary,
+    fontWeight: 200,
+    fontSize: SIZES.small,
+    fontFamily: FONT.light,
+    marginLeft: 5,
   },
 });

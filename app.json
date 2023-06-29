@@ -1,10 +1,23 @@
 {
   "expo": {
     "scheme": "acme",
+    "description": "Javkhlantugs",
+
     "web": {
       "bundler": "metro"
     },
     "name": "drive-practice",
-    "slug": "drive-practice"
+    "slug": "drive-practice",
+    "splash": {
+      "backgroundColor": "#312651"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }

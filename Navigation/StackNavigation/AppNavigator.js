@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,7 +12,6 @@ import Camera from "./Auth/Camera";
 const Stack = createStackNavigator();
 
 const AppNavigator = (props) => {
-  console.log("props", props);
   return (
     <NavigationContainer>
       <Stack.Navigator>

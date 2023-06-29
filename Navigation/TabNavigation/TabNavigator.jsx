@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -9,24 +9,38 @@ import Service from "../../Screens/Service";
 import Promotion from "../../Screens/Promotion";
 import { TouchableOpacity } from "react-native";
 import EditProfileScreen from "../../Screens/EditProfileScreen";
-import { COLORS } from "../../constants";
+import { COLORS, SIZES, icons } from "../../constants";
 
+const MainStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const TabNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      barStyle={{
+        backgroundColor: COLORS.lightWhite,
+        paddingTop: 7,
+        borderTopLeftRadius: 24,
+        borderTopRightRadius: 24,
+        borderLeftWidth: 0.2,
+        borderRightWidth: 0.2,
+        borderTopWidth: 0.2,
+        borderColor: COLORS.gray,
+        position: "absolute",
+        overflow: "hidden",
+      }}
+    >
       <Tab.Screen
-        name="Home"
-        component={Home}
+        name="Нүүр хэсэг"
+        component={MainStackScreen}
         options={{
           tabBarLabel: "Нүүр",
           tabBarIcon: ({ color }) => (
             <Icons
               name="home"
               type={IconType.MaterialCommunityIcons}
-              size={26}
+              size={30}
               color={color}
             />
           ),
@@ -41,7 +55,7 @@ const TabNavigator = () => {
             <Icons
               name="account"
               type={IconType.MaterialCommunityIcons}
-              size={26}
+              size={30}
               color={color}
             />
           ),
@@ -56,7 +70,7 @@ const TabNavigator = () => {
             <Icons
               name="calendar"
               type={IconType.MaterialCommunityIcons}
-              size={26}
+              size={30}
               color={color}
             />
           ),
@@ -71,7 +85,7 @@ const TabNavigator = () => {
             <Icons
               name="newspaper"
               type={IconType.MaterialCommunityIcons}
-              size={26}
+              size={30}
               color={color}
             />
           ),
@@ -82,6 +96,71 @@ const TabNavigator = () => {
 };
 
 export default TabNavigator;
+
+const MainStackScreen = ({ navigation }) => (
+  <MainStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.white, // for ios
+        elevation: 0, // for android
+        borderBottomWidth: 0, //for web
+      },
+      headerTintColor: "#000",
+    }}
+  >
+    <MainStack.Screen
+      name="Миний"
+      component={Home}
+      options={{
+        title: "",
+        headerLeft: () => (
+          <TouchableOpacity style={{ marginLeft: 10 }}>
+            <Icons
+              name="ios-menu"
+              type={IconType.Ionicons}
+              size={25}
+              backgroundColor="#fff"
+              color="#000"
+              onPress={() => navigation.openDrawer()}
+            />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity style={{ marginRight: 10 }}>
+            <View>
+              <ImageBackground
+                source={icons.notification}
+                style={{
+                  height: 25,
+                  width: 25,
+                  justifyContent: "flex-start",
+                  alignItems: "flex-end",
+                }}
+                imageStyle={{ borderRadius: 15, tintColor: COLORS.gray }}
+              >
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: 15,
+                    height: 15,
+                    borderRadius: "50%",
+                    backgroundColor: COLORS.tertiary,
+                  }}
+                >
+                  <Text style={{ color: COLORS.lightWhite, fontSize: 10 }}>
+                    3
+                  </Text>
+                </View>
+              </ImageBackground>
+            </View>
+          </TouchableOpacity>
+        ),
+      }}
+    />
+  </MainStack.Navigator>
+);
 
 const ProfileStackScreen = ({ navigation }) => (
   <ProfileStack.Navigator
@@ -96,12 +175,12 @@ const ProfileStackScreen = ({ navigation }) => (
     }}
   >
     <ProfileStack.Screen
-      name="Profile"
+      name="Миний"
       component={Profile}
       options={{
         title: "",
         headerLeft: () => (
-          <TouchableOpacity>
+          <TouchableOpacity style={{ marginLeft: 10 }}>
             <Icons
               name="ios-menu"
               type={IconType.Ionicons}
@@ -113,7 +192,7 @@ const ProfileStackScreen = ({ navigation }) => (
           </TouchableOpacity>
         ),
         headerRight: () => (
-          <TouchableOpacity>
+          <TouchableOpacity style={{ marginRight: 10 }}>
             <Icons
               name="account-edit"
               type={IconType.MaterialCommunityIcons}

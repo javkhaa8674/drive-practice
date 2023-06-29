@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
 import {
   Avatar,
   Title,
@@ -8,7 +8,6 @@ import {
   TouchableRipple,
 } from "react-native-paper";
 import imagePlaceHolder from "../assets/images/kemal.jpg";
-import { SafeAreaView } from "react-native";
 import Icon from "react-native-dynamic-vector-icons";
 import { COLORS, FONT, SIZES } from "../constants";
 
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: FONT.bold,
+    fontWeight: "500",
   },
   caption: {
     fontSize: 14,

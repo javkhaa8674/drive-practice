@@ -14,6 +14,7 @@ export const AuthStore = new Store({
   initialized: false,
   user: null,
   loading: true,
+  error: "",
 });
 
 const unsub = onAuthStateChanged(auth, (user) => {
@@ -39,6 +40,7 @@ export const appSignIn = async (email, password) => {
   } catch (error) {
     AuthStore.update((store) => {
       store.loading = false;
+      store.error = error.message;
     });
     return { error };
   }
@@ -58,6 +60,7 @@ export const appSignOut = async () => {
   } catch (error) {
     AuthStore.update((store) => {
       store.loading = false;
+      store.error = error.message;
     });
     return { error };
   }
@@ -98,6 +101,9 @@ export const appSignUp = async (
         console.log("data successfully saved users collection");
       })
       .catch((error) => {
+        AuthStore.update((store) => {
+          store.error = error.message;
+        });
         return { error };
       });
 
@@ -110,6 +116,7 @@ export const appSignUp = async (
   } catch (error) {
     AuthStore.update((store) => {
       store.loading = false;
+      store.error = error.message;
     });
     return { error };
   }

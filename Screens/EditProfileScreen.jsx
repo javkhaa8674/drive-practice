@@ -1,15 +1,29 @@
 import React, { useState, useMemo, useRef } from "react";
-import { ImageBackground, Platform, ScrollView } from "react-native";
-import { StyleSheet, Text, TouchableOpacity, View, Button } from "react-native";
-import { COLORS, images, FONT } from "../constants";
-import { Dropdown } from "../components";
+import {
+  ImageBackground,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Button,
+  LogBox,
+} from "react-native";
 import Icons, { IconType } from "react-native-dynamic-vector-icons";
 import { TextInput } from "react-native-paper";
 import "setimmediate";
 import BottomSheet from "reanimated-bottom-sheet";
 import Animated from "react-native-reanimated";
+import * as ImagePicker from "expo-image-picker";
+
+import { COLORS, images, FONT } from "../constants";
+import { Dropdown } from "../components";
+import imagePlaceHolder from "../assets/images/kemal.jpg";
 
 const EditProfileScreen = () => {
+  // LogBox.ignoreLogs("Warning:...");
+  LogBox.ignoreAllLogs();
   const [selectedGender, setSelectedGender] = useState(genderList);
   const genderList = useMemo(
     () => [
@@ -18,18 +32,80 @@ const EditProfileScreen = () => {
     ],
     []
   );
+  const [image, setImage] = useState(imagePlaceHolder);
+
+  const sheetRef = useRef();
+  const fall = new Animated.Value(1);
+
+  const takePhotoFromCamera = async () => {
+    // Ask the user for the permission to access the camera
+    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("You've refused to allow this appp to access your camera!");
+      return;
+    }
+
+    let result = await ImagePicker.launchCameraAsync({
+      ediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 3],
+      quality: 0.7,
+      //base64: true,
+    });
+
+    // Explore the result
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage({ uri: result.assets[0].uri });
+      console.log(result.assets[0].uri);
+    }
+
+    delete result.cancelled;
+  };
+
+  const choosePhotoFromLibrary = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 3],
+      quality: 0.7,
+      selectionLimit: 1,
+      //base64: true,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage({ uri: result.assets[0].uri });
+    }
+  };
 
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={{ alignItems: "center" }}>
         <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelsub}>Choose Your Profile Picture</Text>
+        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
       </View>
-      <TouchableOpacity style={styles.panelButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.panelButton}
+        onPress={takePhotoFromCamera}
+      >
         <Text style={styles.panelButtonTitle}>Take Photo</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.panelButton} onPress={() => {}}>
+      <TouchableOpacity
+        style={styles.panelButton}
+        onPress={choosePhotoFromLibrary}
+      >
         <Text style={styles.panelButtonTitle}>Choose from Library</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.panelButton}
+        onPress={() => sheetRef.current.snapTo(1)}
+      >
+        <Text style={styles.panelButtonTitle}>Cancel</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,9 +117,6 @@ const EditProfileScreen = () => {
     </View>
   );
 
-  const sheetRef = useRef();
-  const fall = new Animated.Value(1);
-
   return (
     <View style={styles.container}>
       <BottomSheet
@@ -51,16 +124,21 @@ const EditProfileScreen = () => {
         snapPoints={[330, 0]}
         renderContent={renderInner}
         renderHeader={renderHeader}
-        //initialSnap={1}
+        initialSnap={1}
         callbackNode={fall}
         enabledGestureInteraction={true}
       />
-      <ScrollView style={{ margin: 20 }}>
+      <Animated.View
+        style={{
+          margin: 20,
+          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+        }}
+      >
         <View style={{ alignItems: "center" }}>
           <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
             <View>
               <ImageBackground
-                source={images.backgroundImg}
+                source={image}
                 style={{ height: 100, width: 100 }}
                 imageStyle={{ borderRadius: 15 }}
               >
@@ -89,7 +167,7 @@ const EditProfileScreen = () => {
               </ImageBackground>
             </View>
           </TouchableOpacity>
-          <Text style={{ marginTop: 10, fontSize: 18, fontWeight: FONT.bold }}>
+          <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "500" }}>
             Батбаяр Ганзориг
           </Text>
         </View>
@@ -105,7 +183,7 @@ const EditProfileScreen = () => {
             // onChangeText={setFirstName}
             style={{
               width: "100%",
-              marginTop: 20,
+              marginTop: 10,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -123,7 +201,7 @@ const EditProfileScreen = () => {
             // onChangeText={setFirstName}
             style={{
               width: "100%",
-              marginTop: 20,
+              marginTop: 10,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -141,7 +219,7 @@ const EditProfileScreen = () => {
             // onChangeText={setFirstName}
             style={{
               width: "100%",
-              marginTop: 20,
+              marginTop: 10,
               backgroundColor: COLORS.white,
             }}
             keyboardType="number-pad"
@@ -159,7 +237,7 @@ const EditProfileScreen = () => {
             // onChangeText={setFirstName}
             style={{
               width: "100%",
-              marginTop: 20,
+              marginTop: 10,
               backgroundColor: COLORS.white,
             }}
             keyboardType="number-pad"
@@ -178,7 +256,7 @@ const EditProfileScreen = () => {
         <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
           <Text style={styles.panelButtonTitle}>Submit</Text>
         </TouchableOpacity>
-      </ScrollView>
+      </Animated.View>
     </View>
   );
 };
@@ -242,7 +320,7 @@ const styles = StyleSheet.create({
   },
   panelButtonTitle: {
     fontSize: 17,
-    fontWeight: "bold",
+    fontWeight: "500",
     color: "white",
   },
   action: {

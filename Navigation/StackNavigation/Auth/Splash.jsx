@@ -1,6 +1,5 @@
-import React from "react";
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { COLORS } from "../../../constants";
 import { AuthStore } from "../../../store/authStore";
 
