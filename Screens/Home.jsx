@@ -14,44 +14,338 @@ import { Individual } from "../components";
 
 const Data = [
   {
-    employer_logo: "https://picsum.photos/200/300",
-    training_id: 1,
+    employer_logo: require("../assets/icons/amazon.png"),
+    training_id: "1",
+    price: 20000,
+    itemName: "Үндсэн",
+    period: "1цаг",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/id/237/200/300",
-    training_id: 2,
+    employer_logo: require("../assets/icons/apple.png"),
+    training_id: "2",
+    price: 200000,
+    itemName: "Хэмнэлт 30%",
+    period: "7 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/seed/picsum/200/300",
-    training_id: 3,
+    employer_logo: require("../assets/icons/calendar.png"),
+    training_id: "3",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/200/300?grayscale",
-    training_id: 4,
+    employer_logo: require("../assets/icons/enter.png"),
+    training_id: "4",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/200/300?grayscale",
-    training_id: 5,
+    employer_logo: require("../assets/icons/check.png"),
+    training_id: "5",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/200/300",
-    training_id: 6,
+    employer_logo: require("../assets/icons/chevron-right.png"),
+    training_id: "6",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/id/237/200/300",
-    training_id: 7,
+    employer_logo: require("../assets/icons/transaction.png"),
+    training_id: "7",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/seed/picsum/200/300",
-    training_id: 8,
+    employer_logo: require("../assets/icons/twitter.png"),
+    training_id: "8",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/200/300?grayscale",
-    training_id: 9,
+    employer_logo: require("../assets/icons/menu.png"),
+    training_id: "9",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
   {
-    employer_logo: "https://picsum.photos/200/300?grayscale",
-    training_id: 10,
+    employer_logo: require("../assets/icons/microsoft.png"),
+    training_id: "10",
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+];
+const Data2 = [
+  {
+    employer_logo: require("../assets/icons/amazon.png"),
+    training_id: 100,
+    price: 20000,
+    itemName: "Үндсэн",
+    period: "1цаг",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/apple.png"),
+    training_id: 102,
+    price: 200000,
+    itemName: "Хэмнэлт 30%",
+    period: "7 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/calendar.png"),
+    training_id: 103,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/enter.png"),
+    training_id: 104,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/check.png"),
+    training_id: 105,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/chevron-right.png"),
+    training_id: 106,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/transaction.png"),
+    training_id: 107,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/twitter.png"),
+    training_id: 108,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/menu.png"),
+    training_id: 109,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
+  },
+  {
+    employer_logo: require("../assets/icons/microsoft.png"),
+    training_id: 110,
+    price: 200000,
+    itemName: "Хэмнэлт 45%",
+    period: "14 хоног",
+    info: [
+      {
+        name: "Бензин",
+        value: "Дадлагажигч хариуцна",
+      },
+      {
+        name: "Өдөрт дадлага хийх хугацаа",
+        value: 2,
+      },
+    ],
   },
 ];
 
@@ -94,7 +388,7 @@ const Home = () => {
                 handleCardPress={handleCardPress}
               />
             )}
-            //keyExtractor={(item) => item.training_id}
+            keyExtractor={(item) => item.training_id}
             contentContainerStyle={{ columnGap: SIZES.medium }}
             horizontal
           />
@@ -105,26 +399,27 @@ const Home = () => {
         <TouchableOpacity>
           <Text style={styles.headerBtn}>Дэлгэрэнгүй</Text>
         </TouchableOpacity>
-      </View>{" "}
+      </View>
       <View style={styles.cardsContainer}>
         {loading ? (
           <ActivityIndicator size="large" color={COLORS.primary} />
         ) : error ? (
           <Text style={styles.error}>Алдаа гарлаа!</Text>
         ) : (
-          <FlatList
-            data={Data}
-            renderItem={({ item }) => (
-              <Individual
-                item={item}
-                selectedTraining={selectedTraining}
-                handleCardPress={handleCardPress}
-              />
-            )}
-            //keyExtractor={(item) => item.training_id}
-            contentContainerStyle={{ columnGap: SIZES.medium }}
-            horizontal
-          />
+          // <FlatList
+          //   data={Data2}
+          //   renderItem={({ item }) => (
+          //     <Individual
+          //       item={item}
+          //       selectedTraining={selectedTraining}
+          //       handleCardPress={handleCardPress}
+          //     />
+          //   )}
+          //   keyExtractor={(item) => item.training_id}
+          //   contentContainerStyle={{ columnGap: SIZES.medium }}
+          //   horizontal
+          // />
+          <View></View>
         )}
       </View>
     </View>
@@ -145,7 +440,7 @@ const styles = StyleSheet.create({
   },
   imageText: {
     marginLeft: 10,
-    fontFamily: FONT.medium,
+    fontFamily: FONT.light,
   },
   image: {
     marginRight: 10,
