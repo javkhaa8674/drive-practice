@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, Text, View, Image } from "react-native";
 import { COLORS, SIZES, FONT, SHADOWS } from "../../constants";
 
-const IndividualTraining = ({ item, selectedTraining, handleCardPress }) => {
+const TeamTraining = ({ item, selectedTraining, handleCardPress }) => {
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.header}>
@@ -73,7 +73,7 @@ const IndividualTraining = ({ item, selectedTraining, handleCardPress }) => {
   );
 };
 
-export default IndividualTraining;
+export default TeamTraining;
 
 const styles = StyleSheet.create({
   container: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     width: 180,
     height: 200,
     borderRadius: SIZES.large,
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.primary,
     ...SHADOWS.medium,
     shadowColor: COLORS.white,
   },
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     width: "90%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: COLORS.tertiary,
+    backgroundColor: COLORS.primary,
     borderRadius: SIZES.medium,
     marginBottom: 15,
   },

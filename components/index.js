@@ -18,6 +18,7 @@ import Camera from "./camera/camera";
 import DatePickerComponents from "./dateTimePicker/datePicker";
 import TimePickerComponents from "./dateTimePicker/timePicker";
 import Individual from "./cards/Individual";
+import Team from "./cards/team";
 
 export {
   ScreenHeaderBtn,
@@ -36,4 +37,5 @@ export {
   DatePickerComponents,
   TimePickerComponents,
   Individual,
+  Team,
 };
