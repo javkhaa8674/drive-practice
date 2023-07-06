@@ -112,15 +112,12 @@ const LoginPage = ({ navigation }) => {
         </TouchableOpacity>
         <Text style={{ marginTop: 15, color: COLORS.gray }}>эсвэл...</Text>
       </View>
-      <View
-        style={{
-          flexDirection: "row",
-          marginTop: 15,
-        }}
-      >
+      <View style={styles.socialContainer}>
         <TouchableOpacity
           style={{
             flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 10,
             borderWidth: 1,
             borderColor: COLORS.primary,
@@ -134,6 +131,8 @@ const LoginPage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 10,
             borderWidth: 1,
             borderColor: COLORS.primary,
@@ -146,6 +145,8 @@ const LoginPage = ({ navigation }) => {
         <TouchableOpacity
           style={{
             flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
             borderRadius: 10,
             borderWidth: 1,
             borderColor: COLORS.primary,
@@ -244,5 +245,10 @@ const styles = StyleSheet.create({
     fontSize: SIZES.small,
     fontFamily: FONT.light,
     marginLeft: 5,
+  },
+  socialContainer: {
+    width: "80%",
+    flexDirection: "row",
+    marginTop: 15,
   },
 });

@@ -7,10 +7,11 @@ import {
   ActivityIndicator,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { COLORS, FONT, SIZES, SHADOWS, images } from "../constants";
 import { AuthStore } from "../store/authStore";
-import { Individual } from "../components";
+import { Individual, Team } from "../components";
 
 const Data = [
   {
@@ -359,70 +360,73 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <View style={styles.header}>
-          <Text style={styles.imageText}>Сайн байна уу?</Text>
-          <Text style={styles.imageText}>Ганбаяр Батболд</Text>
-        </View>
-        <Image source={images.profile} style={styles.image} />
-      </View>
-      <View style={styles.flatContainer}>
-        <Text style={styles.headerTitle}>Ганцаарчилсан сургалт</Text>
-        <TouchableOpacity>
-          <Text style={styles.headerBtn}>Дэлгэрэнгүй</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cardsContainer}>
-        {loading ? (
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        ) : error ? (
-          <Text style={styles.error}>Алдаа гарлаа!</Text>
-        ) : (
-          <FlatList
-            data={Data}
-            renderItem={({ item }) => (
-              <Individual
-                item={item}
-                selectedTraining={selectedTraining}
-                handleCardPress={handleCardPress}
+    <ScrollView>
+      <View>
+        <View style={styles.container}>
+          <View style={styles.headerContainer}>
+            <View style={styles.header}>
+              <Text style={styles.imageText}>Сайн байна уу?</Text>
+              <Text style={styles.imageText}>Ганбаяр Батболд</Text>
+            </View>
+            <Image source={images.profile} style={styles.image} />
+          </View>
+          <View style={styles.flatContainer}>
+            <Text style={styles.headerTitle}>Ганцаарчилсан сургалт</Text>
+            <TouchableOpacity style={{ marginRight: 10 }}>
+              <Text style={styles.headerBtn}>Дэлгэрэнгүй</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.cardsContainer}>
+            {loading ? (
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            ) : error ? (
+              <Text style={styles.error}>Алдаа гарлаа!</Text>
+            ) : (
+              <FlatList
+                data={Data}
+                renderItem={({ item }) => (
+                  <Individual
+                    item={item}
+                    selectedTraining={selectedTraining}
+                    handleCardPress={handleCardPress}
+                  />
+                )}
+                keyExtractor={(item) => item.training_id}
+                contentContainerStyle={{ columnGap: SIZES.medium }}
+                horizontal
               />
             )}
-            keyExtractor={(item) => item.training_id}
-            contentContainerStyle={{ columnGap: SIZES.medium }}
-            horizontal
-          />
-        )}
+          </View>
+          <View style={styles.flatContainer}>
+            <Text style={styles.headerTitle}>Багийн сургалт</Text>
+            <TouchableOpacity style={{ marginRight: 10 }}>
+              <Text style={styles.headerBtn}>Дэлгэрэнгүй</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.cardsContainer}>
+            {loading ? (
+              <ActivityIndicator size="large" color={COLORS.primary} />
+            ) : error ? (
+              <Text style={styles.error}>Алдаа гарлаа!</Text>
+            ) : (
+              <FlatList
+                data={Data2}
+                renderItem={({ item }) => (
+                  <Team
+                    item={item}
+                    selectedTraining={selectedTraining}
+                    handleCardPress={handleCardPress}
+                  />
+                )}
+                keyExtractor={(item) => item.training_id}
+                contentContainerStyle={{ columnGap: SIZES.medium }}
+                horizontal
+              />
+            )}
+          </View>
+        </View>
       </View>
-      <View style={styles.flatContainer}>
-        <Text style={styles.headerTitle}>Багийн сургалт</Text>
-        <TouchableOpacity>
-          <Text style={styles.headerBtn}>Дэлгэрэнгүй</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.cardsContainer}>
-        {loading ? (
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        ) : error ? (
-          <Text style={styles.error}>Алдаа гарлаа!</Text>
-        ) : (
-          // <FlatList
-          //   data={Data2}
-          //   renderItem={({ item }) => (
-          //     <Individual
-          //       item={item}
-          //       selectedTraining={selectedTraining}
-          //       handleCardPress={handleCardPress}
-          //     />
-          //   )}
-          //   keyExtractor={(item) => item.training_id}
-          //   contentContainerStyle={{ columnGap: SIZES.medium }}
-          //   horizontal
-          // />
-          <View></View>
-        )}
-      </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -430,42 +434,47 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "space-between",
-    alignItems: "flex=start",
+    alignItems: "flex-start",
     marginTop: 15,
   },
-  headerContainer: { flexDirection: "row", justifyContent: "space-between" },
-  header: {
-    flexDirection: "column",
-  },
-  imageText: {
-    marginLeft: 10,
-    fontFamily: FONT.light,
-  },
-  image: {
-    marginRight: 10,
-    height: 40,
-    width: 40,
-    borderRadius: 40,
-    marginBottom: 10,
-  },
-  flatContainer: {
+  headerContainer: {
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  header: {
+    flexDirection: "column",
+    marginLeft: 10,
+  },
+  imageText: {
+    fontFamily: FONT.light,
+  },
+  image: {
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    marginRight: 10,
+  },
+  flatContainer: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
   },
   headerTitle: {
     fontSize: SIZES.large,
     fontFamily: FONT.light,
     color: COLORS.primary,
+    marginLeft: 10,
   },
-  flat: {},
   headerBtn: {
     fontSize: SIZES.small,
     fontFamily: FONT.light,
     color: COLORS.gray,
   },
-  cardsContainer: {
-    marginTop: SIZES.medium,
-  },
+  cardsContainer: {},
 });
