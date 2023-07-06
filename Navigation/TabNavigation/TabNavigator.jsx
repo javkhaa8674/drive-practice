@@ -8,6 +8,7 @@ import Profile from "../../Screens/Profile";
 import Service from "../../Screens/Service";
 import Promotion from "../../Screens/Promotion";
 import { TouchableOpacity } from "react-native";
+import ChooseDate from "../../Screens/ChooseDate";
 import EditProfileScreen from "../../Screens/EditProfileScreen";
 import { COLORS, SIZES, icons } from "../../constants";
 
@@ -157,6 +158,13 @@ const MainStackScreen = ({ navigation }) => (
             </View>
           </TouchableOpacity>
         ),
+      }}
+    />
+    <MainStack.Screen
+      name="ChooseDate"
+      component={ChooseDate}
+      options={{
+        title: "Choose Date Modal",
       }}
     />
   </MainStack.Navigator>
