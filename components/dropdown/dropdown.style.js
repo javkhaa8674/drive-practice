@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-start",
     width: "100%",
-    marginTop: 20,
+    marginTop: 5,
   },
   dropdownSelector: {
     flexDirection: "row",

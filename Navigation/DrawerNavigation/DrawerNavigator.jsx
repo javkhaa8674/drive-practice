@@ -24,7 +24,7 @@ const DrawerNavigator = (props) => {
       }}
     >
       <Drawer.Screen
-        name="Homes"
+        name="Нүүр"
         component={Main}
         options={{
           headerShown: false,
@@ -39,7 +39,7 @@ const DrawerNavigator = (props) => {
         }}
       />
       <Drawer.Screen
-        name="Profiles"
+        name="Миний мэдээлэл"
         component={Profile}
         options={{
           headerShown: false,
@@ -54,7 +54,7 @@ const DrawerNavigator = (props) => {
         }}
       />
       <Drawer.Screen
-        name="Services"
+        name="Дадлагажуулах сургалт"
         component={Service}
         options={{
           headerShown: false,
@@ -69,7 +69,7 @@ const DrawerNavigator = (props) => {
         }}
       />
       <Drawer.Screen
-        name="Promotions"
+        name="Сурталчилгаа"
         component={Promotion}
         options={{
           headerShown: false,

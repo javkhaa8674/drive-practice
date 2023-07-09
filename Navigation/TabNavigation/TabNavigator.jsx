@@ -14,6 +14,7 @@ import { COLORS, SIZES, icons } from "../../constants";
 
 const MainStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const ServiceStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const TabNavigator = () => {
@@ -64,7 +65,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Service"
-        component={Service}
+        component={ServiceStackScreen}
         options={{
           tabBarLabel: "Сургалт",
           tabBarIcon: ({ color }) => (
@@ -183,7 +184,7 @@ const ProfileStackScreen = ({ navigation }) => (
     }}
   >
     <ProfileStack.Screen
-      name="Миний"
+      name="Profile"
       component={Profile}
       options={{
         title: "",
@@ -207,18 +208,52 @@ const ProfileStackScreen = ({ navigation }) => (
               size={25}
               backgroundColor="#fff"
               color="#000"
-              onPress={() => navigation.navigate("EditProfile")}
+              onPress={() => navigation.navigate("EditProfileScreen")}
             />
           </TouchableOpacity>
         ),
       }}
     />
     <ProfileStack.Screen
-      name="EditProfile"
+      name="EditProfileScreen"
       component={EditProfileScreen}
       options={{
-        title: "Edit Profile",
+        headerShown: false,
       }}
     />
   </ProfileStack.Navigator>
+);
+
+const ServiceStackScreen = ({ navigation }) => (
+  <ServiceStack.Navigator
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: COLORS.white,
+        shadowColor: COLORS.white, // for ios
+        elevation: 0, // for android
+        borderBottomWidth: 0, //for web
+      },
+      headerTintColor: "#000",
+    }}
+  >
+    <ServiceStack.Screen
+      name="Үйлчилгээ"
+      component={Service}
+      options={{
+        title: "",
+        // headerLeft: () => (
+        //   <TouchableOpacity style={{ marginLeft: 10 }}>
+        //     <Icons
+        //       name="ios-menu"
+        //       type={IconType.Ionicons}
+        //       size={25}
+        //       backgroundColor="#fff"
+        //       color="#000"
+        //       onPress={() => navigation.openDrawer()}
+        //     />
+        //   </TouchableOpacity>
+        // ),
+      }}
+    />
+  </ServiceStack.Navigator>
 );

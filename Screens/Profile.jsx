@@ -1,5 +1,11 @@
 import React from "react";
-import { ScrollView, StyleSheet, View, SafeAreaView } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import {
   Avatar,
   Title,
@@ -10,11 +16,13 @@ import {
 import imagePlaceHolder from "../assets/images/kemal.jpg";
 import Icon from "react-native-dynamic-vector-icons";
 import { COLORS, FONT, SIZES } from "../constants";
+import { AuthStore } from "../store/authStore";
 
 const Profile = () => {
+  const { loading, error, userInfo } = AuthStore.useState();
   return (
-    <ScrollView>
-      <SafeAreaView>
+    <SafeAreaView>
+      <ScrollView>
         <View style={styles.container}>
           <View style={styles.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -23,9 +31,9 @@ const Profile = () => {
                 <Title
                   style={[styles.title, { marginTop: 15, marginBottom: 5 }]}
                 >
-                  Батбаяр Ганзориг
+                  {userInfo.displayName}
                 </Title>
-                <Caption style={styles.caption}>@ganzorig_b</Caption>
+                <Caption style={styles.caption}>{userInfo.email}</Caption>
               </View>
             </View>
           </View>
@@ -39,7 +47,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                Монгол улс, Улаанбаатар хот, Баянзүрх дүүрэг, 17-55 тоот
+                {userInfo.address}
               </Text>
             </View>
             <View style={styles.row}>
@@ -50,7 +58,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                9958-5541
+                {userInfo.phoneNumber}
               </Text>
             </View>
             <View style={styles.row}>
@@ -61,7 +69,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                8855-4774
+                {userInfo.anotherPhoneNumber}
               </Text>
             </View>
             <View style={styles.row}>
@@ -72,7 +80,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                john_doe@mgail.com
+                {userInfo.email}
               </Text>
             </View>
             <View style={styles.row}>
@@ -83,7 +91,7 @@ const Profile = () => {
                 size={20}
               />
               <Text style={{ color: COLORS.primary, marginLeft: 20 }}>
-                1976-10-11
+                {userInfo.dateOfBirth}
               </Text>
             </View>
           </View>
@@ -97,7 +105,9 @@ const Profile = () => {
             ]}
           >
             <Title>40000₮</Title>
-            <Caption>Түрийвч</Caption>
+            <TouchableOpacity>
+              <Caption>Түрийвч</Caption>
+            </TouchableOpacity>
           </View>
           <View style={styles.infoBox}>
             <Title>12</Title>
@@ -161,8 +171,8 @@ const Profile = () => {
             </View>
           </TouchableRipple>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

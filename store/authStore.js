@@ -1,5 +1,5 @@
 import { Store, registerInDevtools } from "pullstate";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -13,12 +13,14 @@ export const AuthStore = new Store({
   isLoggedIn: false,
   initialized: false,
   user: null,
+  userInfo: null,
   loading: true,
   error: "",
 });
 
 const unsub = onAuthStateChanged(auth, (user) => {
   // console.log("onAuthStateChanged", user);
+
   AuthStore.update((store) => {
     store.user = user;
     store.isLoggedIn = user ? true : false;
@@ -27,11 +29,40 @@ const unsub = onAuthStateChanged(auth, (user) => {
   });
 });
 
+export const getUserInfo = async (uid) => {
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data());
+
+    AuthStore.update((store) => {
+      store.userInfo = docSnap.exists() && docSnap.data();
+      store.loading = false;
+    });
+
+    return docSnap.data();
+  } else {
+    // docSnap.data() will be undefined in this case
+    console.log("No such document!");
+    return;
+  }
+};
+
 export const appSignIn = async (email, password) => {
   try {
     const resp = await signInWithEmailAndPassword(auth, email, password);
+    const docRef = doc(db, "users", resp.user.uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data());
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+
     AuthStore.update((store) => {
       store.user = resp.user;
+      store.userInfo = docSnap.exists() && docSnap.data();
       store.isLoggedIn = resp.user ? true : false;
       store.initialized = true;
       store.loading = false;
@@ -74,6 +105,7 @@ export const appSignUp = async (
   firstName,
   selectedGender,
   dateOfBirth,
+  address,
   password,
   displayName
 ) => {
@@ -92,6 +124,7 @@ export const appSignUp = async (
       firstName,
       selectedGender,
       dateOfBirth,
+      address,
       password,
       displayName,
       role: "user",

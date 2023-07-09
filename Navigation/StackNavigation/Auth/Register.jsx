@@ -25,6 +25,7 @@ const RegisterPage = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [secure, setSecure] = useState(true);
@@ -49,6 +50,7 @@ const RegisterPage = ({ navigation }) => {
       firstName,
       selectedGender,
       dateOfBirth,
+      address,
       password,
       confirmPassword,
     ];
@@ -87,6 +89,7 @@ const RegisterPage = ({ navigation }) => {
       firstName,
       selectedGender,
       dateOfBirth,
+      address,
       password,
       lastName + " " + firstName
     );
@@ -161,7 +164,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setPhoneNumber}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="phone-pad"
@@ -178,7 +180,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setAnotherPhoneNumber}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="phone-pad"
@@ -194,7 +195,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setEmail}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="email-address"
@@ -210,7 +210,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setLastName}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -226,7 +225,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setFirstName}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -234,8 +232,8 @@ const RegisterPage = ({ navigation }) => {
           <Dropdown
             data={genderList}
             name="Хүйс"
-            iconName="intersex"
-            iconType="FontAwesome"
+            iconName="gender-male-female"
+            //iconType="FontAwesome"
             iconColor={COLORS.primary}
             selectedGender={selectedGender}
             setSelectedGender={setSelectedGender}
@@ -248,6 +246,22 @@ const RegisterPage = ({ navigation }) => {
             placeholderTextColor={COLORS.gray}
             dateOfBirth={dateOfBirth}
             setDateOfBirth={setDateOfBirth}
+          />
+          <TextInput
+            left={<TextInput.Icon icon="map-marker-radius" />}
+            underlineColor={COLORS.secondary}
+            activeUnderlineColor={COLORS.tertiary}
+            activeOutlineColor={COLORS.white}
+            textColor={COLORS.primary}
+            label="Гэрийн хаяг"
+            value={address}
+            onChangeText={setAddress}
+            multiline
+            style={{
+              width: "100%",
+              backgroundColor: COLORS.white,
+            }}
+            keyboardType="default"
           />
           <TextInput
             left={<TextInput.Icon icon="lock" />}
@@ -263,7 +277,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setPassword}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -286,7 +299,6 @@ const RegisterPage = ({ navigation }) => {
             onChangeText={setConfirmPassword}
             style={{
               width: "100%",
-              marginTop: 20,
               backgroundColor: COLORS.white,
             }}
             keyboardType="default"
@@ -318,7 +330,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-start",
-    marginTop: "15%",
+    marginTop: 25,
   },
   heading: {
     justifyContent: "center",
@@ -343,7 +355,7 @@ const styles = StyleSheet.create({
     width: "60%",
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    marginTop: 20,
+    marginTop: 10,
     paddingBottom: 40,
   },
   button: {

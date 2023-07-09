@@ -15,7 +15,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import dayjs from "dayjs";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Icon from "react-native-dynamic-vector-icons";
-import { COLORS,SIZES } from "../../constants";
+import { COLORS, SIZES } from "../../constants";
 
 const DatePickerComponents = ({
   iconName,
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
     backgroundColor: COLORS.lightWhite,
-    marginTop: 40,
+    marginTop: 5,
   },
   icon: { paddingHorizontal: 15, paddingVertical: 15 },
   textInput: {

@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useRef } from "react";
 import {
+  SafeAreaView,
   ImageBackground,
   Platform,
   ScrollView,
@@ -9,6 +10,7 @@ import {
   View,
   Button,
   LogBox,
+  StatusBar,
 } from "react-native";
 import Icons, { IconType } from "react-native-dynamic-vector-icons";
 import { TextInput } from "react-native-paper";
@@ -20,11 +22,20 @@ import * as ImagePicker from "expo-image-picker";
 import { COLORS, images, FONT } from "../constants";
 import { Dropdown } from "../components";
 import imagePlaceHolder from "../assets/images/kemal.jpg";
+import { AuthStore } from "../store/authStore";
+import { useNavigation } from "@react-navigation/native";
 
-const EditProfileScreen = () => {
-  // LogBox.ignoreLogs("Warning:...");
+const EditProfileScreen = ({ navigation }) => {
   LogBox.ignoreAllLogs();
-  const [selectedGender, setSelectedGender] = useState(genderList);
+  const { loading, error, userInfo } = AuthStore.useState();
+  const [lastName, setLastName] = useState(userInfo.lastName);
+  const [firstName, setFirstName] = useState(userInfo.firstName);
+  const [phoneNumber, setPhoneNumber] = useState(userInfo.phoneNumber);
+  const [anotherPhoneNumber, setAnotherPhoneNumber] = useState(
+    userInfo.anotherPhoneNumber
+  );
+  const [selectedGender, setSelectedGender] = useState(userInfo.selectedGender);
+  const [address, setAddress] = useState(userInfo.address);
   const genderList = useMemo(
     () => [
       { gender: "Эрэгтэй", id: "1" },
@@ -86,26 +97,28 @@ const EditProfileScreen = () => {
   const renderInner = () => (
     <View style={styles.panel}>
       <View style={{ alignItems: "center" }}>
-        <Text style={styles.panelTitle}>Upload Photo</Text>
-        <Text style={styles.panelSubtitle}>Choose Your Profile Picture</Text>
+        <Text style={styles.panelTitle}>Зураг илгээх</Text>
+        <Text style={styles.panelSubtitle}>
+          Та өөрийн нүүр зургийг сонгоно уу?
+        </Text>
       </View>
       <TouchableOpacity
         style={styles.panelButton}
         onPress={takePhotoFromCamera}
       >
-        <Text style={styles.panelButtonTitle}>Take Photo</Text>
+        <Text style={styles.panelButtonTitle}>Зураг авах</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panelButton}
         onPress={choosePhotoFromLibrary}
       >
-        <Text style={styles.panelButtonTitle}>Choose from Library</Text>
+        <Text style={styles.panelButtonTitle}>Зургийн сангаас сонгох</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.panelButton}
         onPress={() => sheetRef.current.snapTo(1)}
       >
-        <Text style={styles.panelButtonTitle}>Cancel</Text>
+        <Text style={styles.panelButtonTitle}>Буцах</Text>
       </TouchableOpacity>
     </View>
   );
@@ -118,146 +131,191 @@ const EditProfileScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <BottomSheet
-        ref={sheetRef}
-        snapPoints={[330, 0]}
-        renderContent={renderInner}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        callbackNode={fall}
-        enabledGestureInteraction={true}
-      />
-      <Animated.View
-        style={{
-          margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}
-      >
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
-            <View>
-              <ImageBackground
-                source={image}
-                style={{ height: 100, width: 100 }}
-                imageStyle={{ borderRadius: 15 }}
-              >
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
+    <SafeAreaView>
+      <ScrollView style={styles.container}>
+        <BottomSheet
+          ref={sheetRef}
+          snapPoints={[500, 0]}
+          renderContent={renderInner}
+          renderHeader={renderHeader}
+          initialSnap={1}
+          callbackNode={fall}
+          enabledGestureInteraction={true}
+        />
+        <Animated.View
+          style={{
+            margin: 0,
+            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+          }}
+        >
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity onPress={() => sheetRef.current.snapTo(0)}>
+              <View>
+                <ImageBackground
+                  source={image}
+                  style={{ height: 100, width: 100 }}
+                  imageStyle={{ borderRadius: 15 }}
                 >
-                  <Icons
-                    name="camera"
-                    type={IconType.MaterialCommunityIcons}
-                    size={26}
-                    color={COLORS.lightWhite}
+                  <View
                     style={{
-                      opacity: 0.7,
-                      alignItems: "center",
+                      flex: 1,
                       justifyContent: "center",
-                      borderWidth: 1,
-                      borderColor: COLORS.lightWhite,
-                      borderRadius: 10,
+                      alignItems: "center",
                     }}
-                  />
-                </View>
-              </ImageBackground>
-            </View>
-          </TouchableOpacity>
-          <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "500" }}>
-            Батбаяр Ганзориг
-          </Text>
-        </View>
-        <View style={styles.action}>
-          <TextInput
-            left={<TextInput.Icon icon="account" iconColor={COLORS.tertiary} />}
-            underlineColor={COLORS.secondary}
-            activeUnderlineColor={COLORS.tertiary}
-            activeOutlineColor={COLORS.white}
-            textColor={COLORS.primary}
-            label="Овог"
-            // value={firstName}
-            // onChangeText={setFirstName}
-            style={{
-              width: "100%",
-              marginTop: 10,
-              backgroundColor: COLORS.white,
-            }}
-            keyboardType="default"
-          />
-        </View>
-        <View style={styles.action}>
-          <TextInput
-            left={<TextInput.Icon icon="account" iconColor={COLORS.tertiary} />}
-            underlineColor={COLORS.secondary}
-            activeUnderlineColor={COLORS.tertiary}
-            activeOutlineColor={COLORS.white}
-            textColor={COLORS.primary}
-            label="Нэр"
-            // value={firstName}
-            // onChangeText={setFirstName}
-            style={{
-              width: "100%",
-              marginTop: 10,
-              backgroundColor: COLORS.white,
-            }}
-            keyboardType="default"
-          />
-        </View>
-        <View style={styles.action}>
-          <TextInput
-            left={<TextInput.Icon icon="phone" iconColor={COLORS.tertiary} />}
-            underlineColor={COLORS.secondary}
-            activeUnderlineColor={COLORS.tertiary}
-            activeOutlineColor={COLORS.white}
-            textColor={COLORS.primary}
-            label="Утас 1"
-            // value={firstName}
-            // onChangeText={setFirstName}
-            style={{
-              width: "100%",
-              marginTop: 10,
-              backgroundColor: COLORS.white,
-            }}
-            keyboardType="number-pad"
-          />
-        </View>
-        <View style={styles.action}>
-          <TextInput
-            left={<TextInput.Icon icon="phone" iconColor={COLORS.tertiary} />}
-            underlineColor={COLORS.secondary}
-            activeUnderlineColor={COLORS.tertiary}
-            activeOutlineColor={COLORS.white}
-            textColor={COLORS.primary}
-            label="Утас 2"
-            // value={firstName}
-            // onChangeText={setFirstName}
-            style={{
-              width: "100%",
-              marginTop: 10,
-              backgroundColor: COLORS.white,
-            }}
-            keyboardType="number-pad"
-          />
-        </View>
-        <View style={styles.action}>
-          <Dropdown
-            data={genderList}
-            name="Хүйс"
-            iconName="gender-male-female"
-            iconColor={COLORS.tertiary}
-            selectedGender={selectedGender}
-            setSelectedGender={setSelectedGender}
-          />
-        </View>
-        <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
-          <Text style={styles.panelButtonTitle}>Submit</Text>
-        </TouchableOpacity>
-      </Animated.View>
-    </View>
+                  >
+                    <Icons
+                      name="camera"
+                      type={IconType.MaterialCommunityIcons}
+                      size={26}
+                      color={COLORS.lightWhite}
+                      style={{
+                        opacity: 0.7,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderColor: COLORS.lightWhite,
+                        borderRadius: 10,
+                      }}
+                    />
+                  </View>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+            <Text style={{ marginTop: 10, fontSize: 18, fontWeight: "500" }}>
+              {userInfo.displayName}
+            </Text>
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              left={
+                <TextInput.Icon icon="account" iconColor={COLORS.tertiary} />
+              }
+              underlineColor={COLORS.secondary}
+              activeUnderlineColor={COLORS.tertiary}
+              activeOutlineColor={COLORS.white}
+              textColor={COLORS.primary}
+              label="Овог"
+              value={lastName}
+              onChangeText={setLastName}
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+              }}
+              keyboardType="default"
+            />
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              left={
+                <TextInput.Icon icon="account" iconColor={COLORS.tertiary} />
+              }
+              underlineColor={COLORS.secondary}
+              activeUnderlineColor={COLORS.tertiary}
+              activeOutlineColor={COLORS.white}
+              textColor={COLORS.primary}
+              label="Нэр"
+              value={firstName}
+              onChangeText={setFirstName}
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+              }}
+              keyboardType="default"
+            />
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              left={<TextInput.Icon icon="phone" iconColor={COLORS.tertiary} />}
+              underlineColor={COLORS.secondary}
+              activeUnderlineColor={COLORS.tertiary}
+              activeOutlineColor={COLORS.white}
+              textColor={COLORS.primary}
+              label="Утас 1"
+              value={phoneNumber}
+              onChangeText={setPhoneNumber}
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+              }}
+              keyboardType="number-pad"
+            />
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              left={<TextInput.Icon icon="phone" iconColor={COLORS.tertiary} />}
+              underlineColor={COLORS.secondary}
+              activeUnderlineColor={COLORS.tertiary}
+              activeOutlineColor={COLORS.white}
+              textColor={COLORS.primary}
+              label="Утас 2"
+              value={anotherPhoneNumber}
+              onChangeText={setAnotherPhoneNumber}
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+              }}
+              keyboardType="number-pad"
+            />
+          </View>
+          <View style={styles.action}>
+            <Dropdown
+              data={genderList}
+              name="Хүйс"
+              iconName="gender-male-female"
+              iconColor={COLORS.tertiary}
+              selectedGender={selectedGender}
+              setSelectedGender={setSelectedGender}
+            />
+          </View>
+          <View style={styles.action}>
+            <TextInput
+              left={
+                <TextInput.Icon
+                  icon="map-marker-radius"
+                  iconColor={COLORS.tertiary}
+                />
+              }
+              underlineColor={COLORS.secondary}
+              activeUnderlineColor={COLORS.tertiary}
+              activeOutlineColor={COLORS.white}
+              textColor={COLORS.primary}
+              label="Гэрийн хаяг"
+              value={address}
+              onChangeText={setAddress}
+              style={{
+                width: "100%",
+                backgroundColor: COLORS.white,
+              }}
+              keyboardType="default"
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={[
+                styles.commandButton,
+                {
+                  backgroundColor: COLORS.lightWhite,
+                  borderWidth: 1,
+                  borderColor: COLORS.tertiary,
+                },
+              ]}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Text
+                style={[styles.panelButtonTitle, { color: COLORS.tertiary }]}
+              >
+                Буцах
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.commandButton} onPress={() => {}}>
+              <Text style={styles.panelButtonTitle}>Хадгалах</Text>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -265,12 +323,22 @@ export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+    //paddingTop: StatusBar.currentHeight,
+  },
+  buttonContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingBottom: 50,
   },
   commandButton: {
+    width: "60%",
+    justifyContent: "center",
+    alignItems: "center",
     padding: 15,
     borderRadius: 10,
-    backgroundColor: "#ff6347",
+    backgroundColor: COLORS.tertiary,
     alignItems: "center",
     marginTop: 10,
   },
@@ -325,8 +393,6 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#f2f2f2",
     paddingBottom: 5,

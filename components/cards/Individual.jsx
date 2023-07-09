@@ -4,7 +4,7 @@ import { COLORS, SIZES, FONT, SHADOWS } from "../../constants";
 
 const IndividualTraining = ({ item, selectedTraining, handleCardPress }) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleCardPress}>
       <View style={styles.header}>
         <Text style={styles.headerText}>
           {item.discount === "" ? item.itemName : "Хэмнэлт " + item.discount}
